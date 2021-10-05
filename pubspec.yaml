@@ -47,6 +47,7 @@ flutter:
     - assets/images/logo_with_text.svg
     - assets/images/ic_us_flag.svg
     - assets/images/ic_vn_flag.svg
+    - assets/images/hero_pic.png
   fonts:
     - family: Roboto
       fonts:
