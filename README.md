@@ -1,2 +1,2 @@
-# E-commerce-app
-E-commerce flutter app
+# Lettutor
+One-on-One learning
