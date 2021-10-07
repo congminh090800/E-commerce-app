@@ -11,5 +11,14 @@
   "copyright": "© 2021 - Bản quyền của LetTutor. Tất cả các quyền được bảo lưu.",
   "slogan": "Tham gia lớp học",
   "highlightedSlogan": "Trực tuyến 1-1 ngay hôm nay!",
-  "bookBtnText": "Học thử miễn phí 25 phút"
+  "bookBtnText": "Học thử miễn phí 25 phút",
+  "signInTitle": "Đăng nhập",
+  "signInDescription": "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn.",
+  "emailLabel" : "ĐỊA CHỈ EMAIL",
+  "passwordLabel": "MẬT KHẨU",
+  "notAMemberLabel": "Chưa có tài khoản?",
+  "signUpLink": "Đăng kí",
+  "forgotPasswordLink": "Quên mật khẩu?",
+  "loginTextBtn": "ĐĂNG NHẬP",
+  "orContinueWith": "Hoặc tiếp tục với"
 }

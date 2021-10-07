@@ -11,5 +11,14 @@
   "copyright": "Copyright © 2021 LetTutor. All rights reserved.",
   "slogan": "Start your 1-on-1",
   "highlightedSlogan": "25 Minute Lessons today!",
-  "bookBtnText": "BOOK A FREE LESSON"
+  "bookBtnText": "BOOK A FREE LESSON",
+  "signInTitle": "Say hello to your English tutors",
+  "signInDescription": "Become fluent faster through one on one video chat lessons tailored to your goals.",
+  "emailLabel" : "EMAIL",
+  "passwordLabel": "PASSWORD",
+  "notAMemberLabel": "Not a member yet?",
+  "signUpLink": "Sign up",
+  "forgotPasswordLink": "Forgot Password?",
+  "loginTextBtn": "LOG IN",
+  "orContinueWith": "Or continue with"
 }
