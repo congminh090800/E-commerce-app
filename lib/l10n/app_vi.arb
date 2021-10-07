@@ -5,5 +5,11 @@
   "signUp": "Đăng kí",
   "chooseLang": "Chọn ngôn ngữ",
   "heroTitle": "Học tiếng anh trực tuyến 1 thầy 1 trò",
-  "heroDescription": "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn."
+  "heroDescription": "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn.",
+  "privacy": "Chính sách bảo mật",
+  "terms": "Điều khoản dịch vụ",
+  "copyright": "© 2021 - Bản quyền của LetTutor. Tất cả các quyền được bảo lưu.",
+  "slogan": "Tham gia lớp học",
+  "highlightedSlogan": "Trực tuyến 1-1 ngay hôm nay!",
+  "bookBtnText": "Học thử miễn phí 25 phút"
 }

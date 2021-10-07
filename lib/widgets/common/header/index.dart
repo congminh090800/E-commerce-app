@@ -24,20 +24,25 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        child: Column(
-          children: [
-            Navbar(isDrawerOpen: isDrawerOpen, bodyScaffoldKey: bodyScaffoldKey)
-          ],
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          child: Column(
+            children: [
+              Navbar(
+                isDrawerOpen: isDrawerOpen,
+                bodyScaffoldKey: bodyScaffoldKey,
+              ),
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
         ),
-        preferredSize: Size.fromHeight(70),
+        preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: Scaffold(
-        key: bodyScaffoldKey,
         drawer: DrawerGuest(),
         onDrawerChanged: (isOpen) {
           handleDrawerStatus(isOpen);
         },
+        key: bodyScaffoldKey,
         body: widget.screen,
       ),
     );

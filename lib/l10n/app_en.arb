@@ -5,5 +5,11 @@
   "signUp": "Sign up",
   "chooseLang": "Choose",
   "heroTitle": "Learn English, anytime, anywhere",
-  "heroDescription": "Become fluent faster through one-on-one video chat lessons tailored to your goals."
+  "heroDescription": "Become fluent faster through one-on-one video chat lessons tailored to your goals.",
+  "privacy": "Privacy",
+  "terms": "Terms",
+  "copyright": "Copyright © 2021 LetTutor. All rights reserved.",
+  "slogan": "Start your 1-on-1",
+  "highlightedSlogan": "25 Minute Lessons today!",
+  "bookBtnText": "BOOK A FREE LESSON"
 }
