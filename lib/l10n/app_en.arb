@@ -20,5 +20,12 @@
   "signUpLink": "Sign up",
   "forgotPasswordLink": "Forgot Password?",
   "loginTextBtn": "LOG IN",
-  "orContinueWith": "Or continue with"
+  "orContinueWith": "Or continue with",
+  "signUpTitle": "Start learning with LetTutor",
+  "alreadyHaveAnAcount": "Already have an account?",
+  "signInLink": "Log in",
+  "signUpTextBtn": "SIGN UP",
+  "resetPasswordTitle": "Reset Password",
+  "resetPasswordDescription": "Please enter your email address to search for your account.",
+  "sendResetLinkBtnText": "Send reset link"
 }

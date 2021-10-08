@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/widgets/common/submit_button.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+class SignUpForm extends StatefulWidget {
+  const SignUpForm({Key? key}) : super(key: key);
 
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignUpFormState extends State<SignUpForm> {
   bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
@@ -56,32 +57,18 @@ class _SignInFormState extends State<SignInForm> {
               children: [
                 Container(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        i18n.notAMemberLabel,
+                        i18n.alreadyHaveAnAcount,
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
                       Text(
-                        i18n.signUpLink,
+                        i18n.signInLink,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xff2862d2),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        i18n.forgotPasswordLink,
-                        style: TextStyle(
-                          fontSize: 14,
                           color: Color(0xff2862d2),
                         ),
                       ),
@@ -93,22 +80,7 @@ class _SignInFormState extends State<SignInForm> {
           ),
           Container(
             padding: EdgeInsets.only(bottom: 24),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Color(0xff0071f0),
-              ),
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    i18n.loginTextBtn,
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
-            ),
+            child: SubmitButton(btnText: i18n.signUpTextBtn),
           )
         ],
       ),

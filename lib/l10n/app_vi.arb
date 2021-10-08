@@ -17,8 +17,15 @@
   "emailLabel" : "ĐỊA CHỈ EMAIL",
   "passwordLabel": "MẬT KHẨU",
   "notAMemberLabel": "Chưa có tài khoản?",
-  "signUpLink": "Đăng kí",
+  "signUpLink": "Đăng ký",
   "forgotPasswordLink": "Quên mật khẩu?",
   "loginTextBtn": "ĐĂNG NHẬP",
-  "orContinueWith": "Hoặc tiếp tục với"
+  "orContinueWith": "Hoặc tiếp tục với",
+  "signUpTitle": "Đăng ký",
+  "alreadyHaveAnAcount": "Đã có tài khoản",
+  "signInLink": "Đăng nhập",
+  "signUpTextBtn": "ĐĂNG KÝ",
+  "resetPasswordTitle": "Đặt lại mật khẩu",
+  "resetPasswordDescription": "Vui lòng nhập email để tìm kiếm tài khoản của bạn.",
+  "sendResetLinkBtnText": "Xác nhận"
 }
