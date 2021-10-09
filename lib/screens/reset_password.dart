@@ -4,14 +4,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({Key? key}) : super(key: key);
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState();
+  _ResetPasswordPageState createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);

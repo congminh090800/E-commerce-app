@@ -5,14 +5,14 @@ import 'package:lettutor/widgets/authentication/login_form.dart';
 import 'package:lettutor/widgets/authentication/third_party_sign_in.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);

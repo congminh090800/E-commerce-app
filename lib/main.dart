@@ -1,9 +1,10 @@
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lettutor/provider/locale_provider.dart';
-import 'package:lettutor/screens/reset_password.dart';
+import 'package:lettutor/screens/tutors/index.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           title: 'LetTutor',
           locale: provider.locale,
           localizationsDelegates: [
+            CountryLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: L10n.all,
           theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Roboto'),
-          home: ResetPassword(),
+          home: TutorsPage(),
         );
       },
     );

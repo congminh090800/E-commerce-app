@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/widgets/common/footer/index.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<String> heroTitleWords =
