@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -16,12 +14,6 @@ class TutorListTile extends StatefulWidget {
 
 class _TutorListTileState extends State<TutorListTile> {
   bool isFavorited = false;
-  @override
-  void initState() {
-    super.initState();
-    log(widget.tutorItem.rating.toString());
-  }
-
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);

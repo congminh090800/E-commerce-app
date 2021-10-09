@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class CustomizedButton extends StatefulWidget {
-  const CustomizedButton({
-    Key? key,
-    this.background = Colors.white,
-    this.primaryColor = const Color(0xff1890ff),
-    this.btnText = "",
-    this.icon,
-    this.textSize = 14,
-    this.borderRadius = 32,
-  }) : super(key: key);
+  const CustomizedButton(
+      {Key? key,
+      this.background = Colors.white,
+      this.primaryColor = const Color(0xff1890ff),
+      this.btnText = "",
+      this.icon,
+      this.textSize = 14,
+      this.borderRadius = 32,
+      this.onTap})
+      : super(key: key);
   final Color background;
   final Color primaryColor;
   final IconData? icon;
   final String btnText;
   final double textSize;
   final double borderRadius;
+  final Function? onTap;
   @override
   _CustomizedButtonState createState() => _CustomizedButtonState();
 }
@@ -32,7 +34,9 @@ class _CustomizedButtonState extends State<CustomizedButton> {
             borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          widget.onTap!();
+        },
         child: Container(
           padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
           child: Row(
