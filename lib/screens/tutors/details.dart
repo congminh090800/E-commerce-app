@@ -9,6 +9,7 @@ import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/report_tutor_dialog.dart';
+import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/twolines_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -161,18 +162,25 @@ class _TutorDetailsState extends State<TutorDetails> {
                                   btnText: i18n.reportBtnText,
                                   icon: Icons.report_gmailerrorred,
                                   textSize: 20,
-                                  onTap: () {
+                                  onTap: () => {
                                     displayDialog(
                                       context,
                                       i18n.reportBtnText + " " + dummy.name,
                                       ReportTutorDialog(),
-                                    );
+                                    ),
                                   },
                                 ),
                                 TwoLinesButton(
                                   btnText: i18n.reviewsBtnText,
                                   icon: Icons.star_border,
                                   textSize: 20,
+                                  onTap: () => {
+                                    displayDialog(
+                                      context,
+                                      i18n.reviewsBtnText,
+                                      ReviewsTutorDialog(),
+                                    ),
+                                  },
                                 ),
                               ],
                             ),
@@ -367,6 +375,36 @@ _AppointmentDataSource _getCalendarDataSource() {
     startTimeZone: '',
     endTimeZone: '',
     subject: 'Reserved',
+  ));
+  appointments.add(Appointment(
+    startTime:
+        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 16, 0, 0, 0)
+            .toLocal(),
+    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 40, 0, 0, 0)
+        .toLocal(),
+    startTimeZone: '',
+    endTimeZone: '',
+    subject: 'Book',
+  ));
+  appointments.add(Appointment(
+    startTime:
+        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 41, 0, 0, 0)
+            .toLocal(),
+    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 5, 0, 0, 0)
+        .toLocal(),
+    startTimeZone: '',
+    endTimeZone: '',
+    subject: 'Book',
+  ));
+  appointments.add(Appointment(
+    startTime:
+        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 6, 0, 0, 0)
+            .toLocal(),
+    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 30, 0, 0, 0)
+        .toLocal(),
+    startTimeZone: '',
+    endTimeZone: '',
+    subject: 'Book',
   ));
   return _AppointmentDataSource(appointments);
 }
