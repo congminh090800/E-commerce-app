@@ -89,5 +89,9 @@
   "messageBtnText": "Message",
   "favoriteBtnText": "Favorite",
   "reportBtnText": "Report",
-  "reviewsBtnText": "Reviews"
+  "reviewsBtnText": "Reviews",
+  "reportTutorDialogDescription": "Help us understand what's happening",
+  "cancelBtnText": "Cancel",
+  "submitBtnText": "Submit",
+  "reportTutorDialogPlaceholder": "Please let us know details about your problem"
 }

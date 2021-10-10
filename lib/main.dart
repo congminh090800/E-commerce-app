@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lettutor/provider/locale_provider.dart';
-import 'package:lettutor/screens/tutors/become_tutor.dart';
+import 'package:lettutor/screens/tutors/details.dart';
 import 'package:provider/provider.dart';
 
 import 'l10n/l10n.dart';
@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
           ],
           supportedLocales: L10n.all,
           theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Roboto'),
-          home: BecomeTutorPage(),
+          /*REPLACE THIS TO VISIT OTHER SCREEN, CLASS NAME OF THE FILES IN /lib/screens IS SCREEN NAMES */
+          home: TutorDetails(),
+          /*REPLACE THIS TO VISIT OTHER SCREEN, CLASS NAME OF THE FILES IN /lib/screens IS SCREEN NAMES */
         );
       },
     );

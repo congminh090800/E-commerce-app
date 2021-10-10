@@ -7,9 +7,10 @@ import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
-import 'package:lettutor/widgets/common/tutor_details/twolines_button.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
+import 'package:lettutor/widgets/tutors/report_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
+import 'package:lettutor/widgets/tutors/twolines_button.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TutorDetails extends StatefulWidget {
@@ -30,6 +31,8 @@ class _TutorDetailsState extends State<TutorDetails> {
       ),
     );
   }
+
+  bool _isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -133,8 +136,15 @@ class _TutorDetailsState extends State<TutorDetails> {
                                 ),
                                 TwoLinesButton(
                                   btnText: i18n.favoriteBtnText,
-                                  icon: Icons.favorite_border,
+                                  icon: _isFavorited == true
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
                                   textSize: 20,
+                                  onTap: () {
+                                    setState(() {
+                                      _isFavorited = !_isFavorited;
+                                    });
+                                  },
                                 ),
                               ],
                             ),
@@ -151,6 +161,13 @@ class _TutorDetailsState extends State<TutorDetails> {
                                   btnText: i18n.reportBtnText,
                                   icon: Icons.report_gmailerrorred,
                                   textSize: 20,
+                                  onTap: () {
+                                    displayDialog(
+                                      context,
+                                      i18n.reportBtnText + " " + dummy.name,
+                                      ReportTutorDialog(),
+                                    );
+                                  },
                                 ),
                                 TwoLinesButton(
                                   btnText: i18n.reviewsBtnText,

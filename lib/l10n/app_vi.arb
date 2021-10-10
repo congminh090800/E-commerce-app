@@ -89,5 +89,9 @@
   "messageBtnText": "Nhắn tin",
   "favoriteBtnText": "Yêu thích",
   "reportBtnText": "Báo cáo",
-  "reviewsBtnText": "Reviews"
+  "reviewsBtnText": "Reviews",
+  "reportTutorDialogDescription": "Giúp chúng tôi biết đã có chuyện gì xảy ra",
+  "cancelBtnText": "Hủy",
+  "submitBtnText": "Gửi báo cáo",
+  "reportTutorDialogPlaceholder": "Hãy cho chúng tôi chi tiết về vấn đề của bạn."
 }
