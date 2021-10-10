@@ -18,6 +18,10 @@ class _TutorsListState extends State<TutorsList> {
     "Hi, My name is Jill I am an experienced English Teacher from Philippine. I would like share my enthusiasm with the learners in this platform. I've been working with diverse learners of all levels for many years. I am greatly passionate about about profession. I love teaching because I can help others improve their skills and it gives me joy and excitement meeting different learners around the world. In my class I worked with wonderful enthusiasm and positivity, and I'm happy t focus on my learner's goal.",
     ["English for kids", "English for business", "Conversational", "STARTERS"],
     "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+    "VN",
+    ["English"],
+    "Finance, gardening, travelling",
+    "5 years of English teaching experience ",
   );
 
   @override

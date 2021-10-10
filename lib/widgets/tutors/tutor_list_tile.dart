@@ -100,26 +100,27 @@ class _TutorListTileState extends State<TutorListTile> {
             ),
           ),
           Container(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: CustomizedButton(
-                      btnText: i18n!.bookTutorBtnText,
-                      icon: Icons.event_available,
-                    ),
+            alignment: Alignment.centerRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  child: CustomizedButton(
+                    btnText: i18n!.bookTutorBtnText,
+                    icon: Icons.event_available,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: CustomizedButton(
-                      btnText: i18n.messageTutorBtnText,
-                      icon: Icons.chat,
-                    ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 10),
+                  child: CustomizedButton(
+                    btnText: i18n.messageTutorBtnText,
+                    icon: Icons.chat,
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

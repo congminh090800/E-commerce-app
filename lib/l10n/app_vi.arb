@@ -84,5 +84,10 @@
   "approvalStepNotification": "Bạn đã hoàn thành tất cả các bước. Vui lòng đợi điều hành viên xét duyệt hồ sơ của bạn.",
   "approvalStepBackBtnText": "Quay lại trang chủ",
   "tutorRegisterNextBtnText": "Tiếp tục",
-  "tutorRegisterBackBtnText": "Quay lại"
+  "tutorRegisterBackBtnText": "Quay lại",
+  "tutorDetailsBookLabel": "Đặt lịch",
+  "messageBtnText": "Nhắn tin",
+  "favoriteBtnText": "Yêu thích",
+  "reportBtnText": "Báo cáo",
+  "reviewsBtnText": "Reviews"
 }

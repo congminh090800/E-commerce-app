@@ -140,7 +140,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                             padding: EdgeInsets.only(bottom: 10),
                             child: SfDateRangePicker(
                               showTodayButton: true,
-                              view: DateRangePickerView.year,
+                              view: DateRangePickerView.month,
                               onSelectionChanged:
                                   (DateRangePickerSelectionChangedArgs args) {
                                 setState(() {
@@ -176,6 +176,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: i18n.profileStepInterestsField,
+                              hintText: i18n.profileStepInterestsPlaceholder,
+                              hintMaxLines: 10,
                             ),
                           ),
                         ),
@@ -185,6 +187,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: i18n.profileStepEducationField,
+                              hintText: i18n.profileStepEducationPlaceholder,
+                              hintMaxLines: 10,
                             ),
                           ),
                         ),
@@ -257,6 +261,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                             decoration: InputDecoration(
                               border: UnderlineInputBorder(),
                               labelText: i18n.profileStepIntroductionField,
+                              hintText: i18n.profileStepIntroductionPlaceholder,
+                              hintMaxLines: 10,
                             ),
                           ),
                         ),
@@ -439,13 +445,12 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
               margin: EdgeInsets.only(top: 50),
               child: Row(
                 children: [
-                  if (_currentStep < getSteps().length - 1)
-                    Expanded(
-                      child: ElevatedButton(
-                        child: Text(i18n.tutorRegisterBackBtnText),
-                        onPressed: onStepCancel,
-                      ),
+                  Expanded(
+                    child: ElevatedButton(
+                      child: Text(i18n.tutorRegisterBackBtnText),
+                      onPressed: onStepCancel,
                     ),
+                  ),
                   const SizedBox(
                     width: 12,
                   ),

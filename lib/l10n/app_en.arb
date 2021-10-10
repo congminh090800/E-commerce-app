@@ -84,5 +84,10 @@
   "approvalStepNotification": "You have done all the steps.Please, wait for the operator's approval",
   "approvalStepBackBtnText": "Back home",
   "tutorRegisterNextBtnText": "Next",
-  "tutorRegisterBackBtnText": "Back"
+  "tutorRegisterBackBtnText": "Back",
+  "tutorDetailsBookLabel": "Book",
+  "messageBtnText": "Message",
+  "favoriteBtnText": "Favorite",
+  "reportBtnText": "Report",
+  "reviewsBtnText": "Reviews"
 }

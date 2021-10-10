@@ -1,45 +1,29 @@
 import 'package:flutter/material.dart';
 
-class CustomizedButton extends StatefulWidget {
-  const CustomizedButton({
+class TwoLinesButton extends StatefulWidget {
+  const TwoLinesButton({
     Key? key,
-    this.background = Colors.white,
-    this.primaryColor = const Color(0xff1890ff),
     this.btnText = "",
     this.icon,
-    this.textSize = 14,
-    this.borderRadius = 32,
     this.onTap,
     this.isDisabled = false,
+    this.primaryColor = const Color(0xff1890ff),
+    this.textSize = 14,
   }) : super(key: key);
-  final Color background;
-  final Color primaryColor;
   final IconData? icon;
   final String btnText;
-  final double textSize;
-  final double borderRadius;
   final Function? onTap;
   final bool isDisabled;
+  final Color primaryColor;
+  final double textSize;
   @override
-  _CustomizedButtonState createState() => _CustomizedButtonState();
+  _TwoLinesButtonState createState() => _TwoLinesButtonState();
 }
 
-class _CustomizedButtonState extends State<CustomizedButton> {
+class _TwoLinesButtonState extends State<TwoLinesButton> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: TextButton.styleFrom(
-        backgroundColor: widget.isDisabled ? Colors.black12 : widget.background,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: widget.isDisabled == true
-                  ? Colors.white24
-                  : widget.primaryColor,
-              width: 1,
-              style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(widget.borderRadius),
-        ),
-      ),
       onPressed: () {
         if (widget.isDisabled == false) {
           widget.onTap!();
@@ -47,7 +31,7 @@ class _CustomizedButtonState extends State<CustomizedButton> {
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(

@@ -35,6 +35,7 @@ dependencies:
   country_code_picker: ^2.0.2
   flutter_rating_bar: ^4.0.0
   syncfusion_flutter_datepicker: ^19.3.44
+  syncfusion_flutter_calendar: ^19.3.44
 dev_dependencies:
   flutter_test:
     sdk: flutter
