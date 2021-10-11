@@ -93,5 +93,11 @@
   "reportTutorDialogDescription": "Giúp chúng tôi biết đã có chuyện gì xảy ra",
   "cancelBtnText": "Hủy",
   "submitBtnText": "Gửi báo cáo",
-  "reportTutorDialogPlaceholder": "Hãy cho chúng tôi chi tiết về vấn đề của bạn."
+  "reportTutorDialogPlaceholder": "Hãy cho chúng tôi chi tiết về vấn đề của bạn.",
+  "bookDialogBookingTimeHeader": "Thời gian",
+  "bookDialogBalanceHeader": "Số dư",
+  "bookDialogBalanceContent": "Bạn còn {numOfLesson} buổi học",
+  "bookDialogPriceHeader": "Giá",
+  "bookDialogPriceContent": "{numOfLesson} buổi học",
+  "bookDialogNotesHeader": "Lưu ý"
 }

@@ -93,5 +93,25 @@
   "reportTutorDialogDescription": "Help us understand what's happening",
   "cancelBtnText": "Cancel",
   "submitBtnText": "Submit",
-  "reportTutorDialogPlaceholder": "Please let us know details about your problem"
+  "reportTutorDialogPlaceholder": "Please let us know details about your problem",
+  "bookDialogBookingTimeHeader": "Booking Time",
+  "bookDialogBalanceHeader": "Balance",
+  "bookDialogBalanceContent": "You have {numOfLesson} lesson(s) less",
+  "@bookDialogBalanceContent": {
+    "placeholders": {
+      "numOfLesson": {
+        "type": "String"
+      }
+    }
+  },
+  "bookDialogPriceHeader": "Price",
+  "bookDialogPriceContent": "{numOfLesson} lesson(s)",
+  "@bookDialogPriceContent": {
+    "placeholders": {
+      "numOfLesson": {
+        "type": "String"
+      }
+    }
+  },
+  "bookDialogNotesHeader": "Notes"
 }
