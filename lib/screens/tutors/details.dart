@@ -7,6 +7,7 @@ import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
+import 'package:lettutor/widgets/tutors/book_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/report_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
@@ -294,24 +295,27 @@ class _TutorDetailsState extends State<TutorDetails> {
                   dataSource: _getCalendarDataSource(),
                   allowAppointmentResize: true,
                   appointmentBuilder: (context, calendarAppointmentDetails) {
+                    var appointment =
+                        calendarAppointmentDetails.appointments.first;
+                    print(appointment);
                     return Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             child: CustomizedButton(
-                              btnText: calendarAppointmentDetails
-                                  .appointments.first.subject,
+                              btnText: appointment.subject,
                               background: Colors.blue,
                               primaryColor: Colors.white,
                               onTap: () {
-                                print(calendarAppointmentDetails
-                                    .appointments.first
-                                    .toString());
+                                print(appointment.toString());
+                                displayDialog(
+                                  context,
+                                  i18n.bookTutorBtnText,
+                                  BookTutorDialog(data: appointment),
+                                );
                               },
-                              isDisabled: calendarAppointmentDetails
-                                      .appointments.first.subject ==
-                                  'Reserved',
+                              isDisabled: appointment.subject == 'Reserved',
                             ),
                           ),
                         ],
