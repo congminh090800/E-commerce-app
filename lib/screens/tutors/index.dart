@@ -7,6 +7,7 @@ import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/tutors_list.dart';
+import 'package:lettutor/widgets/tutors/welcome_banner.dart';
 
 class TutorsPage extends StatefulWidget {
   const TutorsPage({Key? key}) : super(key: key);
@@ -35,81 +36,85 @@ class _TutorsPageState extends State<TutorsPage> {
     ];
     return Header(
       screen: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(30, 40, 30, 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  i18n.tutorPageTitle,
-                  style: TextStyle(
-                    fontSize: 29,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: TagsList(tagsList: tagsList),
-                padding: EdgeInsets.only(bottom: 30),
-              ),
-              Container(
-                padding: EdgeInsets.only(bottom: 20),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: i18n.searchTutorPlaceholder,
-                    suffixIcon: GestureDetector(
-                      child: Icon(Icons.search),
+        children: [
+          WelcomeBanner(),
+          Container(
+            padding: EdgeInsets.fromLTRB(30, 40, 30, 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Text(
+                    i18n.tutorPageTitle,
+                    style: TextStyle(
+                      fontSize: 29,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Row(
-                  children: [
-                    Text(i18n.searchNationality + ": "),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black12),
-                      ),
-                      child: CountryCodePicker(
-                        onChanged: (CountryCode countryCode) {
-                          print(
-                            "New Country selected: " + countryCode.toString(),
-                          );
-                        },
-                        initialSelection: 'VN',
-                        showOnlyCountryWhenClosed: true,
-                        showCountryOnly: true,
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(left: 20),
-                      child: SubmitButton(btnText: i18n.searchTutorSubmit),
-                    ),
-                  ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TagsList(tagsList: tagsList),
+                  padding: EdgeInsets.only(bottom: 30),
                 ),
-              ),
-              Divider(
-                color: Colors.black54,
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(bottom: 20),
-                child: TutorsList(),
-              )
-            ],
+                Container(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: i18n.searchTutorPlaceholder,
+                      suffixIcon: GestureDetector(
+                        child: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    children: [
+                      Text(i18n.searchNationality + ": "),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12),
+                        ),
+                        child: CountryCodePicker(
+                          onChanged: (CountryCode countryCode) {
+                            print(
+                              "New Country selected: " + countryCode.toString(),
+                            );
+                          },
+                          initialSelection: 'VN',
+                          showOnlyCountryWhenClosed: true,
+                          showCountryOnly: true,
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(left: 20),
+                        child: SubmitButton(btnText: i18n.searchTutorSubmit),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Colors.black54,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: TutorsList(),
+                )
+              ],
+            ),
           ),
-        ),
-      ),
+        ],
+      )),
     );
   }
 }

@@ -25,13 +25,14 @@ class _TutorListTileState extends State<TutorListTile> {
           Row(
             children: [
               Container(
-                child: ClipOval(
-                  child: Image.network(
-                    widget.tutorItem.avartarImg,
-                    width: 70,
-                    height: 70,
-                    fit: BoxFit.cover,
+                width: 70,
+                height: 70,
+                child: CircleAvatar(
+                  radius: 70,
+                  backgroundImage: NetworkImage(
+                    "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
                   ),
+                  backgroundColor: Colors.transparent,
                 ),
               ),
               Expanded(

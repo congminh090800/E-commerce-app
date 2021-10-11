@@ -50,15 +50,17 @@ class _TutorDetailsState extends State<TutorDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: ClipOval(
-                            child: Image.network(
-                              dummy.avartarImg,
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.cover,
+                          width: 70,
+                          height: 70,
+                          child: CircleAvatar(
+                            radius: 70,
+                            backgroundImage: NetworkImage(
+                              "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
                             ),
+                            backgroundColor: Colors.transparent,
                           ),
                         ),
                         Expanded(
@@ -94,6 +96,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                         minRating: 0,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
+                        itemSize: 20,
                         itemCount: 5,
                         itemBuilder: (context, _) => Icon(
                           Icons.star,
@@ -338,7 +341,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     timeFormat: "hh:mm",
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

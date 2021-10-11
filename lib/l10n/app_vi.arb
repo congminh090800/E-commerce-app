@@ -92,12 +92,38 @@
   "reviewsBtnText": "Reviews",
   "reportTutorDialogDescription": "Giúp chúng tôi biết đã có chuyện gì xảy ra",
   "cancelBtnText": "Hủy",
-  "submitBtnText": "Gửi báo cáo",
+  "submitBtnText": "Gửi",
   "reportTutorDialogPlaceholder": "Hãy cho chúng tôi chi tiết về vấn đề của bạn.",
   "bookDialogBookingTimeHeader": "Thời gian",
   "bookDialogBalanceHeader": "Số dư",
   "bookDialogBalanceContent": "Bạn còn {numOfLesson} buổi học",
   "bookDialogPriceHeader": "Giá",
   "bookDialogPriceContent": "{numOfLesson} buổi học",
-  "bookDialogNotesHeader": "Lưu ý"
+  "bookDialogNotesHeader": "Lưu ý",
+  "totalLessonTimeBanner": "Tổng thời gian học là {hours} giờ {minutes} phút",
+  "upcomingLessonBanner": "Tiết học tiếp theo",
+  "enterLessonRoomBtnText": "Vào lớp học",
+  "schedulePageTitle": "Lịch đã đặt",
+  "schedulePageDescription1": "Đây là danh sách những khung giờ bạn đã đặt",
+  "schedulePageDescription2": "Bạn có thể theo dõi khi nào buổi học bắt đầu, tham gia buổi học bằng một cú nhấp chuột hoặc có thể hủy buổi học trước 2 tiếng.",
+  "schedulePageNumOfLesson": "{numOfLesson} buổi học",
+  "schedulePageDirectMessage": "Nhắn tin",
+  "schedulePageLessonTime": "Thời gian bài học: {startTime} - {endTime}",
+  "@schedulePageLessonTime": {
+    "placeholders": {
+      "startTime": {
+        "type": "String"
+      },
+      "endTime": {
+        "type": "String"
+      }
+    }
+  },
+  "schedulePageRequestForLesson": "Yêu cầu cho buổi học",
+  "editBtnText": "Chỉnh sửa",
+  "schedulePageEmptyRequest": "Hiện tại không có yêu cầu cho lớp học này. Xin vui lòng viết ra bất kỳ yêu cầu nào cho giáo viên nếu có.",
+  "schedulePageGoToBtnText": "Vào buổi học",
+  "noteDialogHeader": "Yêu cầu đặc biệt",
+  "noteDialogTitle": "Lưu ý",
+  "noteDialogGuide": "Bạn có thể viết bằng tiếng Anh hoặc tiếng Việt (tối đa 200 từ)."
 }

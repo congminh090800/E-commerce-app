@@ -21,14 +21,15 @@ class _ReviewListTileState extends State<ReviewListTile> {
           Expanded(
             flex: 2,
             child: Container(
+              width: 40,
+              height: 40,
               alignment: Alignment.topCenter,
-              child: ClipOval(
-                child: Image.network(
+              child: CircleAvatar(
+                radius: 70,
+                backgroundImage: NetworkImage(
                   "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
-                  fit: BoxFit.cover,
-                  width: 40,
-                  height: 40,
                 ),
+                backgroundColor: Colors.transparent,
               ),
             ),
           ),

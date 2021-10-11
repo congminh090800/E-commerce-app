@@ -113,5 +113,48 @@
       }
     }
   },
-  "bookDialogNotesHeader": "Notes"
+  "bookDialogNotesHeader": "Notes",
+  "totalLessonTimeBanner": "Total lesson time is {hours} hours {minutes} minutes",
+  "@totalLessonTimeBanner": {
+    "placeholders": {
+      "hours": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "upcomingLessonBanner": "Upcoming lesson",
+  "enterLessonRoomBtnText": "Enter lesson room",
+  "schedulePageTitle": "Schedule",
+  "schedulePageDescription1": "Here is a list of the sessions you have booked",
+  "schedulePageDescription2": "You can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours",
+  "schedulePageNumOfLesson": "{numOfLesson} lesson(s)",
+  "@schedulePageNumOfLesson": {
+    "placeholders": {
+      "numOfLesson": {
+        "type": "String"
+      }
+    }
+  },
+  "schedulePageDirectMessage": "Message",
+  "schedulePageLessonTime": "Lesson Time: {startTime} - {endTime}",
+  "@schedulePageLessonTime": {
+    "placeholders": {
+      "startTime": {
+        "type": "String"
+      },
+      "endTime": {
+        "type": "String"
+      }
+    }
+  },
+  "schedulePageRequestForLesson": "Request for lesson",
+  "editBtnText": "Edit",
+  "schedulePageEmptyRequest": "Currently there are no requests for this class. Please write down any requests for the teacher.",
+  "schedulePageGoToBtnText": "Go to meeting",
+  "noteDialogHeader": "Special Request",
+  "noteDialogTitle": "Note",
+  "noteDialogGuide": "You can write in English or Vietnamese (Maximum 200 letters)"
 }
