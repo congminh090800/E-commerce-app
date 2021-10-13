@@ -23,7 +23,16 @@ class _SignUpFormState extends State<SignUpForm> {
             child: TextFormField(
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
-                labelText: i18n!.emailLabel,
+                labelText: i18n!.nameLabelText.toUpperCase(),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 24),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: i18n.emailLabel,
               ),
             ),
           ),
@@ -33,6 +42,28 @@ class _SignUpFormState extends State<SignUpForm> {
               decoration: InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: i18n.passwordLabel,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _showPassword = !_showPassword;
+                    });
+                  },
+                  child: Icon(
+                    _showPassword ? Icons.visibility : Icons.visibility_off,
+                  ),
+                ),
+              ),
+              obscureText: !_showPassword,
+              enableSuggestions: false,
+              autocorrect: false,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 24),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: i18n.comfirmPasswordLabel.toUpperCase(),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     setState(() {

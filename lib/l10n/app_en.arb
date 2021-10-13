@@ -179,5 +179,6 @@
   "levelUpperInter": "Upper-Intermediate",
   "levelAdvanced": "Advanced",
   "levelProficiency": "Proficiency",
-  "profilePageTutorInfoSectionHeader": "Tutor Info"
+  "profilePageTutorInfoSectionHeader": "Tutor Info",
+  "comfirmPasswordLabel": "Comfirm password"
 }
