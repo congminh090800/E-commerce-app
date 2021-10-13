@@ -90,9 +90,10 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Container(
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Image.asset('assets/images/hero_pic.png'),
+                child: Image.asset(
+                  'assets/images/hero_pic.png',
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
                 ),
               ),
               Footer()

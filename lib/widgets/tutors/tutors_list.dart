@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/widgets/tutors/tutor_list_tile.dart';
 
@@ -26,58 +25,41 @@ class _TutorsListState extends State<TutorsList> {
 
   @override
   Widget build(BuildContext context) {
-    var i18n = AppLocalizations.of(context);
     return Container(
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
+        primary: false,
         children: [
           Container(
-            child: Text(
-              i18n!.recommendedTutors,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontSize: 25,
-                color: Color(0xff3c3c3c),
+            child: Card(
+              elevation: 3,
+              margin: EdgeInsets.only(top: 20),
+              child: TutorListTile(tutorItem: dummy),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
               ),
             ),
           ),
           Container(
-            child: ListView(
-              shrinkWrap: true,
-              primary: false,
-              children: [
-                Container(
-                  child: Card(
-                    elevation: 3,
-                    margin: EdgeInsets.only(top: 20),
-                    child: TutorListTile(tutorItem: dummy),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Card(
-                    elevation: 3,
-                    margin: EdgeInsets.only(top: 20),
-                    child: TutorListTile(tutorItem: dummy),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Card(
-                    elevation: 3,
-                    margin: EdgeInsets.only(top: 20),
-                    child: TutorListTile(tutorItem: dummy),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-              ],
+            child: Card(
+              elevation: 3,
+              margin: EdgeInsets.only(top: 20),
+              child: TutorListTile(tutorItem: dummy),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
             ),
-          )
+          ),
+          Container(
+            child: Card(
+              elevation: 3,
+              margin: EdgeInsets.only(top: 20),
+              child: TutorListTile(tutorItem: dummy),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          ),
         ],
       ),
     );

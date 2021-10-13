@@ -5,10 +5,65 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lettutor/provider/locale_provider.dart';
+import 'package:lettutor/screens/home.dart';
+import 'package:lettutor/screens/reset_password.dart';
+import 'package:lettutor/screens/sign_in.dart';
+import 'package:lettutor/screens/sign_up.dart';
+import 'package:lettutor/widgets/common/boiler_plate.dart';
+import 'package:lettutor/widgets/common/header/no_drawer_header.dart';
 import 'package:provider/provider.dart';
 
 class DrawerGuest extends StatelessWidget {
   const DrawerGuest({Key? key}) : super(key: key);
+  void selectedItem(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BoilerPlate(
+              page: SignInPage(),
+            ),
+          ),
+        );
+        break;
+      case 1:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BoilerPlate(
+              page: SignUpPage(),
+            ),
+          ),
+        );
+        break;
+      case 2:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BoilerPlate(
+              page: HomePage(),
+            ),
+          ),
+        );
+        break;
+      case 3:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BoilerPlate(
+              page: NoDrawerHeader(),
+            ),
+          ),
+        );
+        break;
+      case 4:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => BoilerPlate(
+              page: ResetPasswordPage(),
+            ),
+          ),
+        );
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,28 +103,88 @@ class DrawerGuest extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Spacer(),
           Container(
-            child: Center(
-              child: Text(
-                AppLocalizations.of(context)!.signIn,
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Color(0xff007bff),
+            child: InkWell(
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.landingPageTitle,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xff007bff),
+                  ),
                 ),
               ),
+              onTap: () => {
+                selectedItem(context, 2),
+              },
             ),
             padding: EdgeInsets.all(8),
           ),
           Container(
-            child: Center(
-              child: Text(
-                AppLocalizations.of(context)!.signUp,
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Color(0xff007bff),
+            child: InkWell(
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.signIn,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xff007bff),
+                  ),
                 ),
               ),
+              onTap: () => {
+                selectedItem(context, 0),
+              },
+            ),
+            padding: EdgeInsets.all(8),
+          ),
+          Container(
+            child: InkWell(
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.signUp,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xff007bff),
+                  ),
+                ),
+              ),
+              onTap: () => {
+                selectedItem(context, 1),
+              },
+            ),
+            padding: EdgeInsets.all(8),
+          ),
+          Container(
+            child: InkWell(
+              child: Center(
+                child: Text(
+                  "Dashboard for testing",
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xff007bff),
+                  ),
+                ),
+              ),
+              onTap: () => {
+                selectedItem(context, 3),
+              },
+            ),
+            padding: EdgeInsets.all(8),
+          ),
+          Container(
+            child: InkWell(
+              child: Center(
+                child: Text(
+                  AppLocalizations.of(context)!.resetPasswordTitle,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Color(0xff007bff),
+                  ),
+                ),
+              ),
+              onTap: () => {
+                selectedItem(context, 4),
+              },
             ),
             padding: EdgeInsets.all(8),
           ),

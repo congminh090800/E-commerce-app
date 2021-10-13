@@ -6,7 +6,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
-import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/tutors/book_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/report_tutor_dialog.dart';
@@ -39,311 +38,309 @@ class _TutorDetailsState extends State<TutorDetails> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    return Header(
-      screen: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
-          child: Column(
-            children: [
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 70,
-                          height: 70,
-                          child: CircleAvatar(
-                            radius: 70,
-                            backgroundImage: NetworkImage(
-                              "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
-                            ),
-                            backgroundColor: Colors.transparent,
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+        child: Column(
+          children: [
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        child: CircleAvatar(
+                          radius: 70,
+                          backgroundImage: NetworkImage(
+                            "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                          ),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.topRight,
+                          child: CountryCodePicker(
+                            initialSelection: dummy.countryCode,
+                            showOnlyCountryWhenClosed: true,
+                            enabled: false,
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: CountryCodePicker(
-                              initialSelection: dummy.countryCode,
-                              showOnlyCountryWhenClosed: true,
-                              enabled: false,
-                            ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Text(
+                          dummy.name,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: RatingBar.builder(
+                      initialRating: dummy.rating,
+                      minRating: 0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemSize: 20,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                      ignoreGestures: true,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(bottom: 30),
+                    child: Text(
+                      dummy.summary,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(bottom: 30),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TwoLinesButton(
+                                btnText: i18n!.messageBtnText,
+                                icon: Icons.chat_outlined,
+                                textSize: 20,
+                                onTap: () => {
+                                  displayDialog(
+                                    context,
+                                    i18n.messageBtnText,
+                                    MessageTutorDialog(),
+                                  ),
+                                },
+                              ),
+                              TwoLinesButton(
+                                btnText: i18n.favoriteBtnText,
+                                icon: _isFavorited == true
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                textSize: 20,
+                                onTap: () {
+                                  setState(() {
+                                    _isFavorited = !_isFavorited;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.black26,
+                            thickness: 0.5,
+                            indent: 50,
+                            endIndent: 50,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TwoLinesButton(
+                                btnText: i18n.reportBtnText,
+                                icon: Icons.report_gmailerrorred,
+                                textSize: 20,
+                                onTap: () => {
+                                  displayDialog(
+                                    context,
+                                    i18n.reportBtnText + " " + dummy.name,
+                                    ReportTutorDialog(),
+                                  ),
+                                },
+                              ),
+                              TwoLinesButton(
+                                btnText: i18n.reviewsBtnText,
+                                icon: Icons.star_border,
+                                textSize: 20,
+                                onTap: () => {
+                                  displayDialog(
+                                    context,
+                                    i18n.reviewsBtnText,
+                                    ReviewsTutorDialog(),
+                                  ),
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      i18n.profileStepSpecialtiesField,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TagsList(
+                      tagsList: dummy.specialities.toList(),
+                      readOnly: true,
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      i18n.profileStepLanguagesField,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20),
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: TagsList(
+                      tagsList: dummy.tutorLanguages.toList(),
+                      readOnly: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                i18n.profileStepInterestsField,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 20),
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                dummy.interests,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black26,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                i18n.profileStepExperienceField,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 20),
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(bottom: 20),
+              child: Text(
+                dummy.experience,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black26,
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(top: 30, bottom: 10),
+              child: Text(
+                i18n.bookTutorBtnText,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Container(
+              child: SfCalendar(
+                view: CalendarView.day,
+                showDatePickerButton: true,
+                showCurrentTimeIndicator: false,
+                dataSource: _getCalendarDataSource(),
+                allowAppointmentResize: true,
+                appointmentBuilder: (context, calendarAppointmentDetails) {
+                  var appointment =
+                      calendarAppointmentDetails.appointments.first;
+                  print(appointment);
+                  return Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: CustomizedButton(
+                            btnText: appointment.subject,
+                            background: Colors.blue,
+                            primaryColor: Colors.white,
+                            onTap: () {
+                              print(appointment.toString());
+                              displayDialog(
+                                context,
+                                i18n.bookTutorBtnText,
+                                BookTutorDialog(data: appointment),
+                              );
+                            },
+                            isDisabled: appointment.subject == 'Reserved',
                           ),
                         ),
                       ],
                     ),
-                    Container(
-                      child: Row(
-                        children: [
-                          Text(
-                            dummy.name,
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: RatingBar.builder(
-                        initialRating: dummy.rating,
-                        minRating: 0,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemSize: 20,
-                        itemCount: 5,
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
-                        ignoreGestures: true,
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(bottom: 30),
-                      child: Text(
-                        dummy.summary,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(bottom: 30),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TwoLinesButton(
-                                  btnText: i18n!.messageBtnText,
-                                  icon: Icons.chat_outlined,
-                                  textSize: 20,
-                                  onTap: () => {
-                                    displayDialog(
-                                      context,
-                                      i18n.messageBtnText,
-                                      MessageTutorDialog(),
-                                    ),
-                                  },
-                                ),
-                                TwoLinesButton(
-                                  btnText: i18n.favoriteBtnText,
-                                  icon: _isFavorited == true
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  textSize: 20,
-                                  onTap: () {
-                                    setState(() {
-                                      _isFavorited = !_isFavorited;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              color: Colors.black26,
-                              thickness: 0.5,
-                              indent: 50,
-                              endIndent: 50,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TwoLinesButton(
-                                  btnText: i18n.reportBtnText,
-                                  icon: Icons.report_gmailerrorred,
-                                  textSize: 20,
-                                  onTap: () => {
-                                    displayDialog(
-                                      context,
-                                      i18n.reportBtnText + " " + dummy.name,
-                                      ReportTutorDialog(),
-                                    ),
-                                  },
-                                ),
-                                TwoLinesButton(
-                                  btnText: i18n.reviewsBtnText,
-                                  icon: Icons.star_border,
-                                  textSize: 20,
-                                  onTap: () => {
-                                    displayDialog(
-                                      context,
-                                      i18n.reviewsBtnText,
-                                      ReviewsTutorDialog(),
-                                    ),
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        i18n.profileStepSpecialtiesField,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: TagsList(
-                        tagsList: dummy.specialities.toList(),
-                        readOnly: true,
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: Text(
-                        i18n.profileStepLanguagesField,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20),
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 20),
-                      child: TagsList(
-                        tagsList: dummy.tutorLanguages.toList(),
-                        readOnly: true,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  i18n.profileStepInterestsField,
-                  style: TextStyle(
+                  );
+                },
+                timeSlotViewSettings: TimeSlotViewSettings(
+                  startHour: 8,
+                  endHour: 23,
+                  timeIntervalHeight: 100,
+                  timeRulerSize: 100,
+                  timeTextStyle: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
+                  timeInterval: Duration(
+                    minutes: 25,
+                  ),
+                  timeFormat: "hh:mm",
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  dummy.interests,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black26,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  i18n.profileStepExperienceField,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Text(
-                  dummy.experience,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black26,
-                  ),
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(top: 30, bottom: 10),
-                child: Text(
-                  i18n.bookTutorBtnText,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Container(
-                child: SfCalendar(
-                  view: CalendarView.day,
-                  showDatePickerButton: true,
-                  showCurrentTimeIndicator: false,
-                  dataSource: _getCalendarDataSource(),
-                  allowAppointmentResize: true,
-                  appointmentBuilder: (context, calendarAppointmentDetails) {
-                    var appointment =
-                        calendarAppointmentDetails.appointments.first;
-                    print(appointment);
-                    return Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: CustomizedButton(
-                              btnText: appointment.subject,
-                              background: Colors.blue,
-                              primaryColor: Colors.white,
-                              onTap: () {
-                                print(appointment.toString());
-                                displayDialog(
-                                  context,
-                                  i18n.bookTutorBtnText,
-                                  BookTutorDialog(data: appointment),
-                                );
-                              },
-                              isDisabled: appointment.subject == 'Reserved',
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  timeSlotViewSettings: TimeSlotViewSettings(
-                    startHour: 8,
-                    endHour: 23,
-                    timeIntervalHeight: 100,
-                    timeRulerSize: 100,
-                    timeTextStyle: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                    timeInterval: Duration(
-                      minutes: 25,
-                    ),
-                    timeFormat: "hh:mm",
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

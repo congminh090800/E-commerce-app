@@ -4,7 +4,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
-import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -415,57 +414,55 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
             ),
           ),
         ];
-    return Header(
-      screen: Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
-        child: Stepper(
-          type: StepperType.vertical,
-          steps: getSteps(),
-          currentStep: _currentStep,
-          onStepContinue: () {
-            bool isLastStep = _currentStep == getSteps().length - 1;
-            if (isLastStep) {
-              print('finished');
-            } else {
-              setState(() {
-                _currentStep += 1;
-              });
-            }
-          },
-          onStepCancel: () {
-            if (_currentStep > 0) {
-              setState(() {
-                _currentStep -= 1;
-              });
-            }
-          },
-          controlsBuilder: (context, {onStepCancel, onStepContinue}) {
-            return Container(
-              margin: EdgeInsets.only(top: 50),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      child: Text(i18n.tutorRegisterBackBtnText),
-                      onPressed: onStepCancel,
-                    ),
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
+      child: Stepper(
+        type: StepperType.vertical,
+        steps: getSteps(),
+        currentStep: _currentStep,
+        onStepContinue: () {
+          bool isLastStep = _currentStep == getSteps().length - 1;
+          if (isLastStep) {
+            print('finished');
+          } else {
+            setState(() {
+              _currentStep += 1;
+            });
+          }
+        },
+        onStepCancel: () {
+          if (_currentStep > 0) {
+            setState(() {
+              _currentStep -= 1;
+            });
+          }
+        },
+        controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+          return Container(
+            margin: EdgeInsets.only(top: 50),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(i18n.tutorRegisterBackBtnText),
+                    onPressed: onStepCancel,
                   ),
-                  const SizedBox(
-                    width: 12,
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    child: Text(_currentStep == getSteps().length - 1
+                        ? i18n.approvalStepBackBtnText
+                        : i18n.tutorRegisterNextBtnText),
+                    onPressed: onStepContinue,
                   ),
-                  Expanded(
-                    child: ElevatedButton(
-                      child: Text(_currentStep == getSteps().length - 1
-                          ? i18n.approvalStepBackBtnText
-                          : i18n.tutorRegisterNextBtnText),
-                      onPressed: onStepContinue,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

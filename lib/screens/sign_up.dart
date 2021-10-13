@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/widgets/authentication/intro_section.dart';
 import 'package:lettutor/widgets/authentication/signup_form.dart';
 import 'package:lettutor/widgets/authentication/third_party_sign_in.dart';
@@ -15,7 +14,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    var i18n = AppLocalizations.of(context);
     return Header(
       screen: SingleChildScrollView(
         child: Container(

@@ -149,5 +149,17 @@
   "levelAdvanced": "Nâng cao",
   "levelProficiency": "Bậc thầy",
   "profilePageTutorInfoSectionHeader": "Thông tin gia sư",
-  "comfirmPasswordLabel": "Nhập lại mật khẩu"
+  "comfirmPasswordLabel": "Nhập lại mật khẩu",
+  "landingPageTitle": "Giới thiệu",
+  "homeBottomNavItem": "Trang chủ",
+  "messageBottomNavItem": "Tín nhắn",
+  "upcomingBottomNavItem": "Sắp tới",
+  "tutorsBottomNavItem": "Gia sư",
+  "settingsBottomNavItem": "Thiết lập",
+  "logOutBtnText": "Đăng xuất",
+  "viewProfileBtnText": "Chỉnh sửa thông tin",
+  "viewFeedBackBtnText": "Xem đánh giá",
+  "bookingHisBtnText": "Lịch sử học",
+  "advancedSettings": "Tùy chọn nâng cao",
+  "becomeTutorBtnText": "Đăng kí thành gia sư"
 }

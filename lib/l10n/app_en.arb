@@ -3,7 +3,7 @@
   "languageVi" : "Vietnamese",
   "signIn": "Sign in",
   "signUp": "Sign up",
-  "chooseLang": "Choose",
+  "chooseLang": "Choose language",
   "heroTitle": "Learn English, anytime, anywhere",
   "heroDescription": "Become fluent faster through one-on-one video chat lessons tailored to your goals.",
   "privacy": "Privacy",
@@ -180,5 +180,17 @@
   "levelAdvanced": "Advanced",
   "levelProficiency": "Proficiency",
   "profilePageTutorInfoSectionHeader": "Tutor Info",
-  "comfirmPasswordLabel": "Comfirm password"
+  "comfirmPasswordLabel": "Comfirm password",
+  "landingPageTitle": "Introduction",
+  "homeBottomNavItem": "Home",
+  "messageBottomNavItem": "Message",
+  "upcomingBottomNavItem": "Upcoming",
+  "tutorsBottomNavItem": "Tutors",
+  "settingsBottomNavItem": "Settings",
+  "logOutBtnText": "Log out",
+  "viewProfileBtnText": "Edit Profile",
+  "viewFeedBackBtnText": "View Feedbacks",
+  "bookingHisBtnText": "Booking History",
+  "advancedSettings": "Advanced Settings",
+  "becomeTutorBtnText": "Become Tutor"
 }

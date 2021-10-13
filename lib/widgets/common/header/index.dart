@@ -20,6 +20,7 @@ class _HeaderState extends State<Header> {
     });
   }
 
+  int current = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
