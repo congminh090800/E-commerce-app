@@ -178,5 +178,6 @@
   "levelInter": "Intermediate",
   "levelUpperInter": "Upper-Intermediate",
   "levelAdvanced": "Advanced",
-  "levelProficiency": "Proficiency"
+  "levelProficiency": "Proficiency",
+  "profilePageTutorInfoSectionHeader": "Tutor Info"
 }

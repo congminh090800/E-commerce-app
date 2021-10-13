@@ -192,7 +192,7 @@ class _CommonInformationState extends State<CommonInformation> {
                 ),
               )
             ],
-          )
+          ),
         ],
       ),
     );

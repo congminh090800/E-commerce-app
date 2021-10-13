@@ -25,8 +25,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
     var tagsList = [
-      i18n!.allType,
-      i18n.engForKidsType,
+      i18n!.engForKidsType,
       i18n.engForBusinessType,
       i18n.conversationalType,
       i18n.startersType,

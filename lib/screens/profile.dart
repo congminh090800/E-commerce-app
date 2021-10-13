@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/profile/avatar_section.dart';
 import 'package:lettutor/widgets/profile/common_information.dart';
+import 'package:lettutor/widgets/profile/tutor_information.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -39,6 +40,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               CommonInformation(),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(245, 246, 250, 1),
+                  border: Border.all(
+                    color: Colors.black26,
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Text(i18n.profilePageTutorInfoSectionHeader),
+                  ],
+                ),
+              ),
+              TutorInformation(),
             ],
           ),
         ),

@@ -147,5 +147,6 @@
   "levelInter": "Trung cấp",
   "levelUpperInter": "Cao trung",
   "levelAdvanced": "Nâng cao",
-  "levelProficiency": "Bậc thầy"
+  "levelProficiency": "Bậc thầy",
+  "profilePageTutorInfoSectionHeader": "Thông tin gia sư"
 }
