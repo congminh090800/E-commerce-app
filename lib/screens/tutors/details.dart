@@ -350,7 +350,7 @@ class _TutorDetailsState extends State<TutorDetails> {
   }
 }
 
-/* dummy data */
+/* DUMMY  */
 _AppointmentDataSource _getCalendarDataSource() {
   List<Appointment> appointments = <Appointment>[];
   DateTime rigtNow = DateTime.now();
@@ -434,3 +434,4 @@ Tutor dummy = Tutor(
   "Finance, gardening, travelling",
   "5 years of English teaching experience ",
 );
+/*DUMMY DATA */
