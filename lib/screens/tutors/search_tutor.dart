@@ -37,7 +37,7 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(bottom: 5),
               child: Text(
                 i18n.tutorPageTitle,
                 style: TextStyle(
@@ -48,21 +48,34 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
               ),
             ),
             Container(
-              alignment: Alignment.centerLeft,
-              child: TagsList(tagsList: tagsList),
-              padding: EdgeInsets.only(bottom: 30),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 20),
+              margin: EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: i18n.searchTutorPlaceholder,
-                  suffixIcon: GestureDetector(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      width: 0,
+                      style: BorderStyle.none,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.all(0),
+                  filled: true,
+                  fillColor: Colors.black12,
+                  hintText: i18n.searchTutorPlaceholder,
+                  prefixIcon: GestureDetector(
                     child: Icon(Icons.search),
                   ),
                 ),
               ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TagsList(
+                tagsList: tagsList,
+                isHorizontal: true,
+                selectFirstItem: true,
+              ),
+              padding: EdgeInsets.only(bottom: 10),
             ),
             Container(
               alignment: Alignment.centerLeft,
@@ -83,13 +96,16 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                       initialSelection: 'VN',
                       showOnlyCountryWhenClosed: true,
                       showCountryOnly: true,
+                      padding: EdgeInsets.all(0),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(left: 20),
-                    child: SubmitButton(btnText: i18n.searchTutorSubmit),
-                  ),
+                  Expanded(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.only(left: 20),
+                      child: SubmitButton(btnText: i18n.searchTutorSubmit),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -37,6 +37,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.3.44
   syncfusion_flutter_calendar: ^19.3.44
   timeago: ^3.1.0
+  flutter_countdown_timer: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

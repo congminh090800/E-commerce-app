@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/provider/locale_provider.dart';
+import 'package:lettutor/screens/videocall.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:provider/provider.dart';
 
@@ -74,6 +75,12 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
                         btnText: i18n.enterLessonRoomBtnText,
                         icon: Icons.slideshow,
                         textSize: 20,
+                        onTap: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => VideoCallRoom()),
+                          ),
+                        },
                       ),
                     ),
                   ],

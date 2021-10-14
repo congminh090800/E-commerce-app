@@ -215,7 +215,7 @@ class _TutorInformationState extends State<TutorInformation> {
                 ),
                 TagsList(
                   tagsList: tagsList,
-                  readOnly: true,
+                  selectFirstItem: false,
                 ),
               ],
             ),

@@ -205,7 +205,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     margin: EdgeInsets.only(bottom: 20),
                     child: TagsList(
                       tagsList: dummy.specialities.toList(),
-                      readOnly: true,
+                      selectFirstItem: false,
                     ),
                   ),
                   Container(
@@ -225,7 +225,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     margin: EdgeInsets.only(bottom: 20),
                     child: TagsList(
                       tagsList: dummy.tutorLanguages.toList(),
-                      readOnly: true,
+                      selectFirstItem: false,
                     ),
                   ),
                 ],

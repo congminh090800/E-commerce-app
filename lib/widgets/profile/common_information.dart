@@ -176,7 +176,7 @@ class _CommonInformationState extends State<CommonInformation> {
                 ),
                 TagsList(
                   tagsList: tagsList,
-                  readOnly: true,
+                  selectFirstItem: false,
                 ),
               ],
             ),

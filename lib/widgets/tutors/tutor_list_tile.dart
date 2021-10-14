@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/screens/tutors/details.dart';
-import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 
@@ -29,7 +27,6 @@ class _TutorListTileState extends State<TutorListTile> {
   bool isFavorited = false;
   @override
   Widget build(BuildContext context) {
-    var i18n = AppLocalizations.of(context);
     return InkWell(
       onTap: () => {
         displayDialog(
@@ -109,7 +106,7 @@ class _TutorListTileState extends State<TutorListTile> {
               margin: EdgeInsets.only(bottom: 20),
               child: TagsList(
                 tagsList: widget.tutorItem.specialities.toList(),
-                readOnly: true,
+                selectFirstItem: false,
               ),
             ),
             Container(
@@ -121,28 +118,28 @@ class _TutorListTileState extends State<TutorListTile> {
                     : widget.tutorItem.summary.substring(0, 150) + "...",
               ),
             ),
-            Container(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: CustomizedButton(
-                      btnText: i18n!.bookTutorBtnText,
-                      icon: Icons.event_available,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10),
-                    child: CustomizedButton(
-                      btnText: i18n.messageTutorBtnText,
-                      icon: Icons.chat,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.centerRight,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       Container(
+            //         margin: EdgeInsets.only(left: 10),
+            //         child: CustomizedButton(
+            //           btnText: i18n!.bookTutorBtnText,
+            //           icon: Icons.event_available,
+            //         ),
+            //       ),
+            //       Container(
+            //         margin: EdgeInsets.only(left: 10),
+            //         child: CustomizedButton(
+            //           btnText: i18n.messageTutorBtnText,
+            //           icon: Icons.chat,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

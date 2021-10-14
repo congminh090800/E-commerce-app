@@ -329,7 +329,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                               ),
                               TagsList(
                                 tagsList: tagsList,
-                                readOnly: true,
+                                selectFirstItem: true,
                               ),
                             ],
                           ),
