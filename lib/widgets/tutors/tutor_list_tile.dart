@@ -91,6 +91,7 @@ class _TutorListTileState extends State<TutorListTile> {
                 direction: Axis.horizontal,
                 allowHalfRating: true,
                 itemCount: 5,
+                itemSize: 20,
                 itemBuilder: (context, _) => Icon(
                   Icons.star,
                   color: Colors.amber,
@@ -107,15 +108,16 @@ class _TutorListTileState extends State<TutorListTile> {
               child: TagsList(
                 tagsList: widget.tutorItem.specialities.toList(),
                 selectFirstItem: false,
+                readOnly: true,
               ),
             ),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(bottom: 20),
               child: Text(
-                widget.tutorItem.summary.length < 150
-                    ? widget.tutorItem.summary
-                    : widget.tutorItem.summary.substring(0, 150) + "...",
+                widget.tutorItem.summary,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             // Container(

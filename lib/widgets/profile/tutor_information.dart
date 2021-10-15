@@ -157,6 +157,7 @@ class _TutorInformationState extends State<TutorInformation> {
             padding: EdgeInsets.only(bottom: 20),
             alignment: Alignment.centerLeft,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
@@ -204,21 +205,17 @@ class _TutorInformationState extends State<TutorInformation> {
             ),
           ),
           Container(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Text(
-                  i18n.profileStepSpecialtiesField,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                TagsList(
-                  tagsList: tagsList,
-                  selectFirstItem: false,
-                ),
-              ],
+            alignment: Alignment.centerLeft,
+            child: Text(
+              i18n.profileStepSpecialtiesField,
+              style: TextStyle(
+                fontSize: 16,
+              ),
             ),
+          ),
+          TagsList(
+            tagsList: tagsList,
+            selectFirstItem: false,
           ),
           Divider(
             color: Colors.red,

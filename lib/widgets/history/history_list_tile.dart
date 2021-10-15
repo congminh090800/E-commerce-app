@@ -36,10 +36,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
       builder: (context, child) {
         var provider = Provider.of<LocaleProvider>(context);
         return Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
           margin: EdgeInsets.only(bottom: 15),
           decoration: BoxDecoration(
-            color: Colors.black26,
+            color: Color.fromRGBO(241, 241, 241, 1),
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(
@@ -164,6 +164,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 ),
               ),
               ListView(
+                padding: EdgeInsets.only(top: 0),
                 shrinkWrap: true,
                 primary: false,
                 children: [

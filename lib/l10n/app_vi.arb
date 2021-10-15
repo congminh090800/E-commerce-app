@@ -161,5 +161,7 @@
   "viewFeedBackBtnText": "Xem đánh giá",
   "bookingHisBtnText": "Lịch sử học",
   "advancedSettings": "Tùy chọn nâng cao",
-  "becomeTutorBtnText": "Đăng kí thành gia sư"
+  "becomeTutorBtnText": "Đăng kí thành gia sư",
+  "showMoreText": "Đọc thêm",
+  "showLessText": "Thu gọn"
 }

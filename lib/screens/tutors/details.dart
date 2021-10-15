@@ -6,13 +6,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
-import 'package:lettutor/widgets/tutors/book_tutor_dialog.dart';
+import 'package:lettutor/widgets/tutors/book_calendar_dialog.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/report_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/twolines_button.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TutorDetails extends StatefulWidget {
   const TutorDetails({Key? key}) : super(key: key);
@@ -34,13 +33,13 @@ class _TutorDetailsState extends State<TutorDetails> {
   }
 
   bool _isFavorited = false;
-
+  bool _showFullSummary = false;
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.fromLTRB(20, 30, 20, 30),
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 30),
         child: Column(
           children: [
             Container(
@@ -108,27 +107,49 @@ class _TutorDetailsState extends State<TutorDetails> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(bottom: 30),
                     child: Text(
                       dummy.summary,
                       style: TextStyle(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
+                        fontSize: 16,
+                        color: Color(0xff787878),
                       ),
+                      maxLines: _showFullSummary == false ? 4 : null,
                     ),
                   ),
+                  InkWell(
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        _showFullSummary == false
+                            ? i18n!.showMoreText
+                            : i18n!.showLessText,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _showFullSummary = !_showFullSummary;
+                      });
+                    },
+                  ),
                   Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(bottom: 30),
-                      child: Column(
-                        children: [
-                          Row(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 0),
+                    child: Column(
+                      children: [
+                        SingleChildScrollView(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               TwoLinesButton(
-                                btnText: i18n!.messageBtnText,
+                                btnText: i18n.messageBtnText,
                                 icon: Icons.chat_outlined,
-                                textSize: 20,
+                                textSize: 16,
                                 onTap: () => {
                                   displayDialog(
                                     context,
@@ -142,28 +163,17 @@ class _TutorDetailsState extends State<TutorDetails> {
                                 icon: _isFavorited == true
                                     ? Icons.favorite
                                     : Icons.favorite_border,
-                                textSize: 20,
+                                textSize: 16,
                                 onTap: () {
                                   setState(() {
                                     _isFavorited = !_isFavorited;
                                   });
                                 },
                               ),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.black26,
-                            thickness: 0.5,
-                            indent: 50,
-                            endIndent: 50,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               TwoLinesButton(
                                 btnText: i18n.reportBtnText,
                                 icon: Icons.report_gmailerrorred,
-                                textSize: 20,
+                                textSize: 16,
                                 onTap: () => {
                                   displayDialog(
                                     context,
@@ -175,7 +185,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               TwoLinesButton(
                                 btnText: i18n.reviewsBtnText,
                                 icon: Icons.star_border,
-                                textSize: 20,
+                                textSize: 16,
                                 onTap: () => {
                                   displayDialog(
                                     context,
@@ -186,8 +196,23 @@ class _TutorDetailsState extends State<TutorDetails> {
                               ),
                             ],
                           ),
-                        ],
-                      )),
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: CustomizedButton(
+                      btnText: i18n.bookTutorBtnText,
+                      background: Colors.blue,
+                      primaryColor: Colors.white,
+                      onTap: () => {
+                        displayDialog(context, i18n.bookTutorBtnText,
+                            BookCalendarDialog())
+                      },
+                    ),
+                  ),
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(bottom: 20),
@@ -206,6 +231,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     child: TagsList(
                       tagsList: dummy.specialities.toList(),
                       selectFirstItem: false,
+                      readOnly: true,
                     ),
                   ),
                   Container(
@@ -226,6 +252,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     child: TagsList(
                       tagsList: dummy.tutorLanguages.toList(),
                       selectFirstItem: false,
+                      readOnly: true,
                     ),
                   ),
                 ],
@@ -277,69 +304,6 @@ class _TutorDetailsState extends State<TutorDetails> {
                 ),
               ),
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 30, bottom: 10),
-              child: Text(
-                i18n.bookTutorBtnText,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Container(
-              child: SfCalendar(
-                view: CalendarView.day,
-                showDatePickerButton: true,
-                showCurrentTimeIndicator: false,
-                dataSource: _getCalendarDataSource(),
-                allowAppointmentResize: true,
-                appointmentBuilder: (context, calendarAppointmentDetails) {
-                  var appointment =
-                      calendarAppointmentDetails.appointments.first;
-                  print(appointment);
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: CustomizedButton(
-                            btnText: appointment.subject,
-                            background: Colors.blue,
-                            primaryColor: Colors.white,
-                            onTap: () {
-                              print(appointment.toString());
-                              displayDialog(
-                                context,
-                                i18n.bookTutorBtnText,
-                                BookTutorDialog(data: appointment),
-                              );
-                            },
-                            isDisabled: appointment.subject == 'Reserved',
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                timeSlotViewSettings: TimeSlotViewSettings(
-                  startHour: 8,
-                  endHour: 23,
-                  timeIntervalHeight: 100,
-                  timeRulerSize: 100,
-                  timeTextStyle: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  timeInterval: Duration(
-                    minutes: 25,
-                  ),
-                  timeFormat: "hh:mm",
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -348,77 +312,6 @@ class _TutorDetailsState extends State<TutorDetails> {
 }
 
 /* DUMMY  */
-_AppointmentDataSource _getCalendarDataSource() {
-  List<Appointment> appointments = <Appointment>[];
-  DateTime rigtNow = DateTime.now();
-  appointments.add(Appointment(
-    startTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 0, 0, 0, 0)
-        .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 25, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 26, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 50, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 51, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 15, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Reserved',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 16, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 40, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 41, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 5, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 6, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 30, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  return _AppointmentDataSource(appointments);
-}
-
-class _AppointmentDataSource extends CalendarDataSource {
-  _AppointmentDataSource(List<Appointment> source) {
-    appointments = source;
-  }
-}
-
 Tutor dummy = Tutor(
   "1",
   "Jill Leano",

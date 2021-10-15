@@ -192,5 +192,7 @@
   "viewFeedBackBtnText": "View Feedbacks",
   "bookingHisBtnText": "Booking History",
   "advancedSettings": "Advanced Settings",
-  "becomeTutorBtnText": "Become Tutor"
+  "becomeTutorBtnText": "Become Tutor",
+  "showMoreText": "Show more",
+  "showLessText": "Show less"
 }

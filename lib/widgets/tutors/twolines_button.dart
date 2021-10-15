@@ -30,7 +30,7 @@ class _TwoLinesButtonState extends State<TwoLinesButton> {
         }
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+        padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

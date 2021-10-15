@@ -40,7 +40,7 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
           padding: EdgeInsets.all(10),
           margin: EdgeInsets.only(bottom: 15),
           decoration: BoxDecoration(
-            color: Colors.black26,
+            color: Color.fromRGBO(241, 241, 241, 1),
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(

@@ -67,6 +67,7 @@ class _HistoryPageState extends State<HistoryPage> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,
+                                color: Color(0xff787878),
                               ),
                             ),
                           ),
@@ -77,6 +78,7 @@ class _HistoryPageState extends State<HistoryPage> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontStyle: FontStyle.italic,
+                                color: Color(0xff787878),
                               ),
                             ),
                           ),
@@ -90,6 +92,7 @@ class _HistoryPageState extends State<HistoryPage> {
             /* LIST BEGIN HERE */
             Container(
               child: ListView(
+                padding: EdgeInsets.only(top: 0),
                 shrinkWrap: true,
                 primary: false,
                 children: [

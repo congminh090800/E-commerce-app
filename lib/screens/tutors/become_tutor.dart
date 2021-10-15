@@ -44,7 +44,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
               overflow: TextOverflow.ellipsis,
             ),
             content: Container(
-              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(top: 0),
+              alignment: Alignment.topLeft,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -269,6 +270,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           alignment: Alignment.centerLeft,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 i18n.profileStepBestAtTeachingField,
@@ -318,21 +320,17 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           ),
                         ),
                         Container(
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: [
-                              Text(
-                                i18n.profileStepSpecialtiesField,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              TagsList(
-                                tagsList: tagsList,
-                                selectFirstItem: true,
-                              ),
-                            ],
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            i18n.profileStepSpecialtiesField,
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
+                        ),
+                        TagsList(
+                          tagsList: tagsList,
+                          selectFirstItem: false,
                         ),
                       ],
                     ),
@@ -414,56 +412,53 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
             ),
           ),
         ];
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, 10, 0, 30),
-      child: Stepper(
-        type: StepperType.vertical,
-        steps: getSteps(),
-        currentStep: _currentStep,
-        onStepContinue: () {
-          bool isLastStep = _currentStep == getSteps().length - 1;
-          if (isLastStep) {
-            print('finished');
-          } else {
-            setState(() {
-              _currentStep += 1;
-            });
-          }
-        },
-        onStepCancel: () {
-          if (_currentStep > 0) {
-            setState(() {
-              _currentStep -= 1;
-            });
-          }
-        },
-        controlsBuilder: (context, {onStepCancel, onStepContinue}) {
-          return Container(
-            margin: EdgeInsets.only(top: 50),
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text(i18n.tutorRegisterBackBtnText),
-                    onPressed: onStepCancel,
-                  ),
+    return Stepper(
+      type: StepperType.vertical,
+      steps: getSteps(),
+      currentStep: _currentStep,
+      onStepContinue: () {
+        bool isLastStep = _currentStep == getSteps().length - 1;
+        if (isLastStep) {
+          print('finished');
+        } else {
+          setState(() {
+            _currentStep += 1;
+          });
+        }
+      },
+      onStepCancel: () {
+        if (_currentStep > 0) {
+          setState(() {
+            _currentStep -= 1;
+          });
+        }
+      },
+      controlsBuilder: (context, {onStepCancel, onStepContinue}) {
+        return Container(
+          margin: EdgeInsets.only(top: 50),
+          child: Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  child: Text(i18n.tutorRegisterBackBtnText),
+                  onPressed: onStepCancel,
                 ),
-                const SizedBox(
-                  width: 12,
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: ElevatedButton(
+                  child: Text(_currentStep == getSteps().length - 1
+                      ? i18n.approvalStepBackBtnText
+                      : i18n.tutorRegisterNextBtnText),
+                  onPressed: onStepContinue,
                 ),
-                Expanded(
-                  child: ElevatedButton(
-                    child: Text(_currentStep == getSteps().length - 1
-                        ? i18n.approvalStepBackBtnText
-                        : i18n.tutorRegisterNextBtnText),
-                    onPressed: onStepContinue,
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

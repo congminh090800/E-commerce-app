@@ -12,8 +12,9 @@ class _ReviewsTutorDialogState extends State<ReviewsTutorDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: ListView(
+        padding: EdgeInsets.only(top: 0),
         children: [
           ReviewListTile(),
           ReviewListTile(),

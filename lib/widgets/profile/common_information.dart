@@ -162,23 +162,18 @@ class _CommonInformationState extends State<CommonInformation> {
             ),
           ),
           Container(
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(bottom: 10, top: 10),
-                  child: Text(
-                    i18n.wantToLearnLabelText,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                TagsList(
-                  tagsList: tagsList,
-                  selectFirstItem: false,
-                ),
-              ],
+            margin: EdgeInsets.only(bottom: 10, top: 10),
+            child: Text(
+              i18n.wantToLearnLabelText,
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Container(
+            child: TagsList(
+              tagsList: tagsList,
+              selectFirstItem: false,
             ),
           ),
           Row(
