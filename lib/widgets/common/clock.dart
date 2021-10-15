@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class Clock extends StatefulWidget {
-  const Clock({Key? key}) : super(key: key);
-
+  const Clock({Key? key, this.color = Colors.white}) : super(key: key);
+  final Color color;
   @override
   _ClockState createState() => _ClockState();
 }
@@ -48,7 +48,10 @@ class _ClockState extends State<Clock> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(_timeString),
+      child: Text(
+        _timeString,
+        style: TextStyle(color: widget.color),
+      ),
     );
   }
 }
