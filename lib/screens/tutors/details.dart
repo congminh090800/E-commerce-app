@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
@@ -49,61 +50,76 @@ class _TutorDetailsState extends State<TutorDetails> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 70,
-                        height: 70,
-                        child: CircleAvatar(
-                          radius: 70,
-                          backgroundImage: NetworkImage(
-                            "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
-                          ),
-                          backgroundColor: Colors.transparent,
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(bottom: 10),
+                              alignment: Alignment.centerLeft,
+                              width: 100,
+                              height: 100,
+                              child: CircleAvatar(
+                                radius: 100,
+                                backgroundImage: NetworkImage(
+                                  "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                                ),
+                                backgroundColor: Colors.transparent,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          alignment: Alignment.topRight,
-                          child: CountryCodePicker(
-                            initialSelection: dummy.countryCode,
-                            showOnlyCountryWhenClosed: true,
-                            enabled: false,
-                          ),
+                        flex: 7,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                dummy.name,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              padding: EdgeInsets.only(left: 16),
+                            ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: CountryCodePicker(
+                                alignLeft: true,
+                                initialSelection: dummy.countryCode,
+                                showOnlyCountryWhenClosed: true,
+                                enabled: false,
+                                padding: EdgeInsets.all(0),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 15),
+                              alignment: Alignment.centerLeft,
+                              child: RatingBar.builder(
+                                initialRating: dummy.rating,
+                                minRating: 0,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemSize: 20,
+                                itemCount: 5,
+                                itemBuilder: (context, _) => Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                },
+                                ignoreGestures: true,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                  Container(
-                    child: Row(
-                      children: [
-                        Text(
-                          dummy.name,
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(bottom: 20),
-                    child: RatingBar.builder(
-                      initialRating: dummy.rating,
-                      minRating: 0,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemSize: 20,
-                      itemCount: 5,
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                      ignoreGestures: true,
-                    ),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,

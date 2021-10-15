@@ -1,4 +1,6 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
 import 'package:lettutor/screens/tutors/details.dart';
@@ -38,9 +40,11 @@ class _TutorListTileState extends State<TutorListTile> {
       child: Container(
         padding: EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   width: 70,
@@ -80,6 +84,20 @@ class _TutorListTileState extends State<TutorListTile> {
                     style: TextStyle(fontSize: 22),
                   )
                 ],
+              ),
+            ),
+            Container(
+              width: 200,
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black12),
+              ),
+              child: CountryCodePicker(
+                alignLeft: true,
+                initialSelection: dummy.countryCode,
+                showOnlyCountryWhenClosed: true,
+                enabled: false,
+                padding: EdgeInsets.all(0),
               ),
             ),
             Container(
