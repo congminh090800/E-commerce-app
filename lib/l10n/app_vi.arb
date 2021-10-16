@@ -163,5 +163,19 @@
   "advancedSettings": "Tùy chọn nâng cao",
   "becomeTutorBtnText": "Đăng kí thành gia sư",
   "showMoreText": "Đọc thêm",
-  "showLessText": "Thu gọn"
+  "showLessText": "Thu gọn",
+  "courseViewTitle": "Khám phá các khóa học",
+  "courseViewDescription": "LiveTutor đã xây dựng nên các khóa học của các lĩnh vực trong cuộc sống chất lượng, bài bản và khoa học nhất cho những người đang có nhu cầu trau dồi thêm kiến thức về các lĩnh vực.",
+  "courseViewSearchPlaceholder": "Khóa học",
+  "courseViewLevelPlaceholder": "Chọn cấp độ",
+  "courseViewCategoryPlaceholder": "Chọn danh mục",
+  "courseViewSortByLevel": "Sắp xếp theo độ khó",
+  "courseViewLevelAsc": "Độ khó tăng dần",
+  "courseViewLevelDesc": "Độ khó giảm dần",
+  "courseViewOverviewLabel": "Giới thiệu",
+  "courseViewWhyTake": "Tại sao bạn nên học khóa học này",
+  "courseViewWhat": "Bạn có thể làm gì",
+  "courseViewExperienceLvl": "Trình độ yêu cầu",
+  "courseViewLength": "Thời lượng khóa học",
+  "courseViewTopicList": "Danh sách chủ đề"
 }

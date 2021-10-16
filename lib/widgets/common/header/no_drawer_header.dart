@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/screens/courses/index.dart';
 import 'package:lettutor/screens/message.dart';
 import 'package:lettutor/screens/schedule.dart';
 import 'package:lettutor/screens/settings.dart';
@@ -20,6 +21,7 @@ class _NoDrawerHeaderState extends State<NoDrawerHeader> {
     MessagePage(),
     SchedulePage(),
     SearchTutorPage(),
+    CoursesPage(),
     SettingsPage(),
   ];
   int current = 0;
@@ -63,6 +65,10 @@ class _NoDrawerHeaderState extends State<NoDrawerHeader> {
           BottomNavigationBarItem(
             icon: Icon(Icons.groups),
             label: i18n.tutorsBottomNavItem,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: i18n.courseViewSearchPlaceholder,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
