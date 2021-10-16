@@ -59,42 +59,56 @@ class _TutorInformationState extends State<TutorInformation> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20, top: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.profileStepInterestsField,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 hintText: i18n.profileStepInterestsPlaceholder,
-                hintMaxLines: 10,
+                alignLabelWithHint: true,
+                hintMaxLines: 5,
+                labelText: i18n.profileStepInterestsField,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.profileStepEducationField,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 hintText: i18n.profileStepEducationPlaceholder,
-                hintMaxLines: 10,
+                alignLabelWithHint: true,
+                hintMaxLines: 5,
+                labelText: i18n.profileStepEducationField,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.profileStepExperienceField,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
+                hintText: i18n.profileStepExperienceField,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.profileStepProfession,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
+                hintText: i18n.profileStepProfession,
               ),
             ),
           ),
@@ -114,19 +128,27 @@ class _TutorInformationState extends State<TutorInformation> {
             child: Row(
               children: [
                 Text(i18n.profileStepLanguagesField + ": "),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12),
-                  ),
-                  child: CountryCodePicker(
-                    onChanged: (CountryCode countryCode) {
-                      print(
-                        "New Country selected: " + countryCode.toString(),
-                      );
-                    },
-                    initialSelection: 'VN',
-                    showOnlyCountryWhenClosed: true,
-                    showCountryOnly: true,
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white54,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.black12,
+                        width: 1,
+                      ),
+                    ),
+                    child: CountryCodePicker(
+                      onChanged: (CountryCode countryCode) {
+                        print(
+                          "New Country selected: " + countryCode.toString(),
+                        );
+                      },
+                      initialSelection: 'VN',
+                      showOnlyCountryWhenClosed: true,
+                      showCountryOnly: true,
+                      alignLeft: true,
+                    ),
                   ),
                 ),
               ],
@@ -143,22 +165,26 @@ class _TutorInformationState extends State<TutorInformation> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            margin: EdgeInsets.only(bottom: 20, top: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.profileStepIntroductionField,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 hintText: i18n.profileStepIntroductionPlaceholder,
-                hintMaxLines: 10,
+                alignLabelWithHint: true,
+                hintMaxLines: 5,
+                labelText: i18n.profileStepIntroductionField,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            margin: EdgeInsets.only(bottom: 20),
             alignment: Alignment.centerLeft,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   i18n.profileStepBestAtTeachingField,
@@ -206,6 +232,7 @@ class _TutorInformationState extends State<TutorInformation> {
           ),
           Container(
             alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(bottom: 10),
             child: Text(
               i18n.profileStepSpecialtiesField,
               style: TextStyle(
@@ -213,9 +240,12 @@ class _TutorInformationState extends State<TutorInformation> {
               ),
             ),
           ),
-          TagsList(
-            tagsList: tagsList,
-            selectFirstItem: false,
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            child: TagsList(
+              tagsList: tagsList,
+              selectFirstItem: false,
+            ),
           ),
           Divider(
             color: Colors.red,

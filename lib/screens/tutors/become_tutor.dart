@@ -90,11 +90,14 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           icon: Icons.image,
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          margin: EdgeInsets.only(bottom: 20, top: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepTutorNameField,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
+                              hintText: i18n.profileStepTutorNameField,
                             ),
                           ),
                         ),
@@ -104,27 +107,35 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           child: Row(
                             children: [
                               Text(i18n.profileStepNationalityField + ": "),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black12),
-                                ),
-                                child: CountryCodePicker(
-                                  onChanged: (CountryCode countryCode) {
-                                    print(
-                                      "New Country selected: " +
-                                          countryCode.toString(),
-                                    );
-                                  },
-                                  initialSelection: 'VN',
-                                  showOnlyCountryWhenClosed: true,
-                                  showCountryOnly: true,
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white54,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.black38,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: CountryCodePicker(
+                                    onChanged: (CountryCode countryCode) {
+                                      print(
+                                        "New Country selected: " +
+                                            countryCode.toString(),
+                                      );
+                                    },
+                                    initialSelection: 'VN',
+                                    showOnlyCountryWhenClosed: true,
+                                    showCountryOnly: true,
+                                    alignLeft: true,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          margin: EdgeInsets.only(bottom: 20),
                           child: CustomizedButton(
                             btnText: i18n.profileStepBirthdayField,
                             onTap: () {
@@ -136,7 +147,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                         ),
                         if (showDatePicker == true)
                           Container(
-                            padding: EdgeInsets.only(bottom: 10),
+                            margin: EdgeInsets.only(bottom: 10),
                             child: SfDateRangePicker(
                               showTodayButton: true,
                               view: DateRangePickerView.month,
@@ -170,42 +181,56 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          margin: EdgeInsets.only(bottom: 20, top: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepInterestsField,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
                               hintText: i18n.profileStepInterestsPlaceholder,
-                              hintMaxLines: 10,
+                              alignLabelWithHint: true,
+                              hintMaxLines: 5,
+                              labelText: i18n.profileStepInterestsField,
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          margin: EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepEducationField,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
                               hintText: i18n.profileStepEducationPlaceholder,
-                              hintMaxLines: 10,
+                              alignLabelWithHint: true,
+                              hintMaxLines: 5,
+                              labelText: i18n.profileStepEducationField,
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 10),
+                          margin: EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepExperienceField,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
+                              hintText: i18n.profileStepExperienceField,
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          margin: EdgeInsets.only(bottom: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepProfession,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
+                              hintText: i18n.profileStepProfession,
                             ),
                           ),
                         ),
@@ -225,20 +250,28 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           child: Row(
                             children: [
                               Text(i18n.profileStepLanguagesField + ": "),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black12),
-                                ),
-                                child: CountryCodePicker(
-                                  onChanged: (CountryCode countryCode) {
-                                    print(
-                                      "New Country selected: " +
-                                          countryCode.toString(),
-                                    );
-                                  },
-                                  initialSelection: 'VN',
-                                  showOnlyCountryWhenClosed: true,
-                                  showCountryOnly: true,
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white54,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Colors.black38,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: CountryCodePicker(
+                                    onChanged: (CountryCode countryCode) {
+                                      print(
+                                        "New Country selected: " +
+                                            countryCode.toString(),
+                                      );
+                                    },
+                                    initialSelection: 'VN',
+                                    showOnlyCountryWhenClosed: true,
+                                    showCountryOnly: true,
+                                    alignLeft: true,
+                                  ),
                                 ),
                               ),
                             ],
@@ -255,18 +288,22 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          margin: EdgeInsets.only(bottom: 20, top: 20),
                           child: TextFormField(
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: i18n.profileStepIntroductionField,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(width: 1),
+                              ),
                               hintText: i18n.profileStepIntroductionPlaceholder,
-                              hintMaxLines: 10,
+                              alignLabelWithHint: true,
+                              hintMaxLines: 5,
+                              labelText: i18n.profileStepIntroductionField,
                             ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(bottom: 20),
+                          margin: EdgeInsets.only(bottom: 20),
                           alignment: Alignment.centerLeft,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -321,6 +358,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(bottom: 10),
                           child: Text(
                             i18n.profileStepSpecialtiesField,
                             style: TextStyle(

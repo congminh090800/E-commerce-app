@@ -22,7 +22,10 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n!.nameLabelText.toUpperCase(),
               ),
             ),
@@ -31,7 +34,10 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n.emailLabel,
               ),
             ),
@@ -40,7 +46,10 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n.passwordLabel,
                 suffixIcon: GestureDetector(
                   onTap: () {
@@ -62,7 +71,10 @@ class _SignUpFormState extends State<SignUpForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n.comfirmPasswordLabel.toUpperCase(),
                 suffixIcon: GestureDetector(
                   onTap: () {

@@ -53,58 +53,75 @@ class _CommonInformationState extends State<CommonInformation> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.nameLabelText,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
+                hintText: i18n.nameLabelText,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.emailLabelText,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
+                hintText: i18n.emailLabelText,
               ),
               enabled: false,
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20, bottom: 20),
+            margin: EdgeInsets.only(bottom: 20),
             child: Row(
               children: [
                 Text(i18n.countryLabelText + ": "),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12),
-                  ),
-                  child: CountryCodePicker(
-                    onChanged: (CountryCode countryCode) {
-                      print(
-                        "New Country selected: " + countryCode.toString(),
-                      );
-                    },
-                    initialSelection: 'VN',
-                    showOnlyCountryWhenClosed: true,
-                    showCountryOnly: true,
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white54,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.black38,
+                        width: 1,
+                      ),
+                    ),
+                    child: CountryCodePicker(
+                      onChanged: (CountryCode countryCode) {
+                        print(
+                          "New Country selected: " + countryCode.toString(),
+                        );
+                      },
+                      initialSelection: 'VN',
+                      showOnlyCountryWhenClosed: true,
+                      showCountryOnly: true,
+                      alignLeft: true,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                labelText: i18n.phoneLabelText,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
+                hintText: i18n.phoneLabelText,
               ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(bottom: 10, top: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: CustomizedButton(
               btnText: i18n.birthDayLabelText,
               onTap: () {
@@ -116,7 +133,7 @@ class _CommonInformationState extends State<CommonInformation> {
           ),
           if (showDatePicker == true)
             Container(
-              padding: EdgeInsets.only(bottom: 10),
+              margin: EdgeInsets.only(bottom: 20),
               child: SfDateRangePicker(
                 showTodayButton: true,
                 view: DateRangePickerView.month,
@@ -133,7 +150,7 @@ class _CommonInformationState extends State<CommonInformation> {
               ),
             ),
           Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: EdgeInsets.only(bottom: 10),
             alignment: Alignment.centerLeft,
             child: Text(
               i18n.levelLabelText + ": ",
@@ -143,9 +160,19 @@ class _CommonInformationState extends State<CommonInformation> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+            decoration: BoxDecoration(
+              color: Colors.white54,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.black38,
+                width: 1,
+              ),
+            ),
             child: DropdownButton(
               isExpanded: true,
+              underline: SizedBox(),
               items: levels.map<DropdownMenuItem>((String selectedValue) {
                 return DropdownMenuItem(
                   child: Text(selectedValue),
@@ -162,7 +189,8 @@ class _CommonInformationState extends State<CommonInformation> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 10, top: 10),
+            margin: EdgeInsets.only(bottom: 10),
+            alignment: Alignment.centerLeft,
             child: Text(
               i18n.wantToLearnLabelText,
               style: TextStyle(

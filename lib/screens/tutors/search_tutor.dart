@@ -1,7 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/widgets/common/submit_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/tutors_list.dart';
 
@@ -83,29 +82,30 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
               child: Row(
                 children: [
                   Text(i18n.searchNationality + ": "),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black12),
-                    ),
-                    child: CountryCodePicker(
-                      onChanged: (CountryCode countryCode) {
-                        print(
-                          "New Country selected: " + countryCode.toString(),
-                        );
-                      },
-                      initialSelection: 'VN',
-                      showOnlyCountryWhenClosed: true,
-                      showCountryOnly: true,
-                      padding: EdgeInsets.all(0),
-                    ),
-                  ),
                   Expanded(
                     child: Container(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(left: 20),
-                      child: SubmitButton(btnText: i18n.searchTutorSubmit),
+                      decoration: BoxDecoration(
+                        color: Colors.white54,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.black12,
+                          width: 1,
+                        ),
+                      ),
+                      child: CountryCodePicker(
+                        onChanged: (CountryCode countryCode) {
+                          print(
+                            "New Country selected: " + countryCode.toString(),
+                          );
+                        },
+                        initialSelection: 'VN',
+                        showOnlyCountryWhenClosed: true,
+                        showCountryOnly: true,
+                        padding: EdgeInsets.all(0),
+                        alignLeft: true,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -87,17 +87,18 @@ class _TutorListTileState extends State<TutorListTile> {
               ),
             ),
             Container(
-              width: 200,
               alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black12),
-              ),
+              transform: Matrix4.translationValues(-15, 0, 0),
               child: CountryCodePicker(
                 alignLeft: true,
                 initialSelection: dummy.countryCode,
                 showOnlyCountryWhenClosed: true,
                 enabled: false,
                 padding: EdgeInsets.all(0),
+                textStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black54,
+                ),
               ),
             ),
             Container(
@@ -127,6 +128,7 @@ class _TutorListTileState extends State<TutorListTile> {
                 tagsList: widget.tutorItem.specialities.toList(),
                 selectFirstItem: false,
                 readOnly: true,
+                isHorizontal: true,
               ),
             ),
             Container(
@@ -136,6 +138,9 @@ class _TutorListTileState extends State<TutorListTile> {
                 widget.tutorItem.summary,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.black54,
+                ),
               ),
             ),
             // Container(

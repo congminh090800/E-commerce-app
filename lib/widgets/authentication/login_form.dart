@@ -21,7 +21,10 @@ class _LoginFormState extends State<LoginForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n!.emailLabel,
               ),
             ),
@@ -30,7 +33,10 @@ class _LoginFormState extends State<LoginForm> {
             padding: EdgeInsets.only(bottom: 24),
             child: TextFormField(
               decoration: InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(width: 1),
+                ),
                 labelText: i18n.passwordLabel,
                 suffixIcon: GestureDetector(
                   onTap: () {

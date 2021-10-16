@@ -93,6 +93,9 @@ class _TutorDetailsState extends State<TutorDetails> {
                                 initialSelection: dummy.countryCode,
                                 showOnlyCountryWhenClosed: true,
                                 enabled: false,
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                ),
                                 padding: EdgeInsets.all(0),
                               ),
                             ),
@@ -165,7 +168,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               TwoLinesButton(
                                 btnText: i18n.messageBtnText,
                                 icon: Icons.chat_outlined,
-                                textSize: 16,
+                                textSize: 18,
                                 onTap: () => {
                                   displayDialog(
                                     context,
@@ -179,7 +182,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                                 icon: _isFavorited == true
                                     ? Icons.favorite
                                     : Icons.favorite_border,
-                                textSize: 16,
+                                textSize: 18,
                                 onTap: () {
                                   setState(() {
                                     _isFavorited = !_isFavorited;
@@ -189,7 +192,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               TwoLinesButton(
                                 btnText: i18n.reportBtnText,
                                 icon: Icons.report_gmailerrorred,
-                                textSize: 16,
+                                textSize: 18,
                                 onTap: () => {
                                   displayDialog(
                                     context,
@@ -201,7 +204,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               TwoLinesButton(
                                 btnText: i18n.reviewsBtnText,
                                 icon: Icons.star_border,
-                                textSize: 16,
+                                textSize: 18,
                                 onTap: () => {
                                   displayDialog(
                                     context,
