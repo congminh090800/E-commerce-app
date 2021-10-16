@@ -66,6 +66,7 @@ class _ReportTutorDialogState extends State<ReportTutorDialog> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CustomizedButton(
+                  borderRadius: 5,
                   btnText: i18n.cancelBtnText,
                   onTap: () {
                     Navigator.pop(context);
@@ -75,6 +76,9 @@ class _ReportTutorDialogState extends State<ReportTutorDialog> {
                   width: 15,
                 ),
                 CustomizedButton(
+                  borderRadius: 5,
+                  background: Colors.blue,
+                  primaryColor: Colors.white,
                   btnText: i18n.submitBtnText,
                   isDisabled: isSubmitDisabled,
                 ),

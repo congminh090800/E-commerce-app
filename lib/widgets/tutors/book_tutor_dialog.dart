@@ -239,6 +239,7 @@ class _BookTutorDialogState extends State<BookTutorDialog> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CustomizedButton(
+                        borderRadius: 5,
                         btnText: i18n.cancelBtnText,
                         textSize: 20,
                         onTap: () => {
@@ -249,6 +250,7 @@ class _BookTutorDialogState extends State<BookTutorDialog> {
                         width: 10,
                       ),
                       CustomizedButton(
+                        borderRadius: 5,
                         btnText: i18n.bookTutorBtnText,
                         icon: Icons.double_arrow,
                         background: Colors.blue,
