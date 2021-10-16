@@ -35,18 +35,6 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
         child: Column(
           children: [
             Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(bottom: 5),
-              child: Text(
-                i18n.tutorPageTitle,
-                style: TextStyle(
-                  fontSize: 29,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Container(
               margin: EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 decoration: InputDecoration(

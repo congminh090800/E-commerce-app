@@ -48,7 +48,7 @@ class _TagsListState extends State<TagsList> {
               key: Key(index.toString()),
               index: index,
               title: item,
-              pressEnabled: true,
+              pressEnabled: widget.readOnly == true ? false : true,
               active: (index == 0 && widget.selectFirstItem == true) ||
                       widget.readOnly == true
                   ? true

@@ -17,15 +17,16 @@ class _ReviewListTileState extends State<ReviewListTile> {
       margin: EdgeInsets.only(bottom: 40),
       alignment: Alignment.centerLeft,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             flex: 2,
             child: Container(
-              width: 40,
-              height: 40,
+              width: 120,
+              height: 120,
               alignment: Alignment.topCenter,
               child: CircleAvatar(
-                radius: 70,
                 backgroundImage: NetworkImage(
                   "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
                 ),
@@ -36,9 +37,6 @@ class _ReviewListTileState extends State<ReviewListTile> {
           Expanded(
             flex: 8,
             child: Container(
-              margin: EdgeInsets.only(
-                left: 10,
-              ),
               child: Column(
                 children: [
                   Row(
