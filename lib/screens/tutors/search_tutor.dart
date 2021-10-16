@@ -88,7 +88,7 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                         color: Colors.white54,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: Colors.black12,
+                          color: Colors.black38,
                           width: 1,
                         ),
                       ),
