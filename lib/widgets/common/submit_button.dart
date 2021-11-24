@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SubmitButton extends StatefulWidget {
-  const SubmitButton({Key? key, required this.btnText}) : super(key: key);
+  const SubmitButton({Key? key, required this.btnText, this.onTap})
+      : super(key: key);
   final String btnText;
+  final Function? onTap;
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
 }
@@ -14,7 +16,9 @@ class _SubmitButtonState extends State<SubmitButton> {
       style: TextButton.styleFrom(
         backgroundColor: Color(0xff0071f0),
       ),
-      onPressed: () {},
+      onPressed: () {
+        widget.onTap!();
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
