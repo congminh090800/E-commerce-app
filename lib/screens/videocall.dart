@@ -4,14 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/widgets/common/clock.dart';
 
 class VideoCallRoom extends StatefulWidget {
-  const VideoCallRoom({Key? key}) : super(key: key);
-
+  const VideoCallRoom({Key? key, this.startTimeStamp = 0}) : super(key: key);
+  final int startTimeStamp;
   @override
   _VideoCallRoomState createState() => _VideoCallRoomState();
 }
 
 class _VideoCallRoomState extends State<VideoCallRoom> {
-  int endTime = DateTime.now().millisecondsSinceEpoch + 10000000 * 30;
   bool muted = false;
   bool camOff = false;
   @override
@@ -167,7 +166,7 @@ class _VideoCallRoomState extends State<VideoCallRoom> {
                             alignment: Alignment.center,
                             width: 200,
                             child: CountdownTimer(
-                              endTime: endTime,
+                              endTime: widget.startTimeStamp,
                               textStyle:
                                   TextStyle(fontSize: 20, color: Colors.white),
                             ),

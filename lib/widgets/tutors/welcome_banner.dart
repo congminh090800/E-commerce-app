@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/models/booking_dto.dart';
 import 'package:lettutor/provider/locale_provider.dart';
 import 'package:lettutor/screens/videocall.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
@@ -14,6 +18,42 @@ class WelcomeBanner extends StatefulWidget {
 }
 
 class _WelcomeBannerState extends State<WelcomeBanner> {
+  BookingDTO? booking;
+  double totalLearntTime = 0;
+  Future<void> loadBookingJson() async {
+    var jsonText = await rootBundle.loadString("assets/booking_dummy.json");
+    Iterable i = jsonDecode(jsonText);
+    List<BookingDTO>? result = List<BookingDTO>.from(
+        i.map((bookingInfo) => BookingDTO.fromJson(bookingInfo)));
+    setState(() {
+      booking = result.length > 0 ? result.elementAt(0) : null;
+    });
+  }
+
+  Future<void> loadTotalLearntTime() async {
+    var jsonText = await rootBundle.loadString("assets/total_hour_dummy.json");
+    Map<String, dynamic> mapper = jsonDecode(jsonText);
+    setState(() {
+      totalLearntTime = mapper["total"] ?? 0;
+    });
+  }
+
+  DateTime getNearest() {
+    DateTime next = DateTime.now();
+    if (booking != null && booking!.scheduleDetailInfo != null) {
+      int startTime = booking!.scheduleDetailInfo!.startPeriodTimestamp!;
+      next = DateTime.fromMillisecondsSinceEpoch(startTime);
+    }
+    return next;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.loadBookingJson();
+    this.loadTotalLearntTime();
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
@@ -32,7 +72,9 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
               Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Text(
-                  i18n!.totalLessonTimeBanner(12.toString(), 44.toString()),
+                  i18n!.totalLessonTimeBanner(
+                      (totalLearntTime / 60).floor().toString(),
+                      (totalLearntTime.round() % 60).toString()),
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
@@ -61,7 +103,7 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
                           'hh:mm EEEE, dd MMMM y',
                           provider.locale.toString(),
                         ).format(
-                          DateTime.now(),
+                          getNearest(),
                         ),
                         style: TextStyle(
                           fontSize: 20,
@@ -78,7 +120,10 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
                         onTap: () => {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context) => VideoCallRoom()),
+                                builder: (context) => VideoCallRoom(
+                                      startTimeStamp:
+                                          getNearest().millisecondsSinceEpoch,
+                                    )),
                           ),
                         },
                       ),

@@ -1,3 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:lettutor/models/schedule_detail_dto.dart';
+
+part 'booking_dto.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class BookingDTO {
   String? id;
   DateTime? createdAt;
@@ -7,12 +13,13 @@ class BookingDTO {
   bool? isDeleted;
   String? recordUrl;
   String? scheduleDetailId;
-  String? scoreByTutor;
+  int? scoreByTutor;
   String? studentMeetingLin;
   String? studentRequest;
   String? tutorMeetingLink;
   String? tutorReview;
   String? userId;
+  ScheduleDetailDTO? scheduleDetailInfo;
 
   BookingDTO(
       this.id,
@@ -28,5 +35,9 @@ class BookingDTO {
       this.studentRequest,
       this.tutorMeetingLink,
       this.tutorReview,
-      this.userId);
+      this.userId,
+      this.scheduleDetailInfo);
+  factory BookingDTO.fromJson(Map<String, dynamic> json) =>
+      _$BookingDTOFromJson(json);
+  Map<String, dynamic> toJson() => _$BookingDTOToJson(this);
 }

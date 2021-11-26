@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lettutor/models/tutor.dart';
+import 'package:lettutor/models/tutor_dto.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/tutors/book_calendar_dialog.dart';
@@ -15,8 +16,8 @@ import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/twolines_button.dart';
 
 class TutorDetails extends StatefulWidget {
-  const TutorDetails({Key? key}) : super(key: key);
-
+  const TutorDetails({Key? key, required this.tutor}) : super(key: key);
+  final TutorDTO tutor;
   @override
   _TutorDetailsState createState() => _TutorDetailsState();
 }
@@ -31,6 +32,15 @@ class _TutorDetailsState extends State<TutorDetails> {
         fullscreenDialog: true,
       ),
     );
+  }
+
+  double getTotalRating() {
+    double result = 0;
+    for (var i = 0; i < widget.tutor.feedbacks!.length; i++) {
+      result = result + widget.tutor.feedbacks!.elementAt(i).rating!;
+    }
+
+    return result / widget.tutor.feedbacks!.length;
   }
 
   bool _isFavorited = false;
@@ -63,7 +73,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               child: CircleAvatar(
                                 radius: 100,
                                 backgroundImage: NetworkImage(
-                                  "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                                  widget.tutor.avatar ?? "",
                                 ),
                                 backgroundColor: Colors.transparent,
                               ),
@@ -78,7 +88,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                           children: [
                             Container(
                               child: Text(
-                                dummy.name,
+                                widget.tutor.name ?? "default",
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w700,
@@ -90,7 +100,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                               alignment: Alignment.centerLeft,
                               child: CountryCodePicker(
                                 alignLeft: true,
-                                initialSelection: dummy.countryCode,
+                                initialSelection: widget.tutor.country ?? "VN",
                                 showOnlyCountryWhenClosed: true,
                                 enabled: false,
                                 textStyle: TextStyle(
@@ -103,7 +113,9 @@ class _TutorDetailsState extends State<TutorDetails> {
                               padding: EdgeInsets.only(left: 15),
                               alignment: Alignment.centerLeft,
                               child: RatingBar.builder(
-                                initialRating: dummy.rating,
+                                initialRating: getTotalRating().isNaN
+                                    ? 0
+                                    : getTotalRating(),
                                 minRating: 0,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
@@ -127,7 +139,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      dummy.summary,
+                      widget.tutor.bio ?? "default",
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff787878),
@@ -196,7 +208,9 @@ class _TutorDetailsState extends State<TutorDetails> {
                                 onTap: () => {
                                   displayDialog(
                                     context,
-                                    i18n.reportBtnText + " " + dummy.name,
+                                    i18n.reportBtnText +
+                                        " " +
+                                        (widget.tutor.name ?? ""),
                                     ReportTutorDialog(),
                                   ),
                                 },
@@ -209,7 +223,9 @@ class _TutorDetailsState extends State<TutorDetails> {
                                   displayDialog(
                                     context,
                                     i18n.reviewsBtnText,
-                                    ReviewsTutorDialog(),
+                                    ReviewsTutorDialog(
+                                      feedbacks: widget.tutor.feedbacks,
+                                    ),
                                   ),
                                 },
                               ),
@@ -248,7 +264,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(bottom: 20),
                     child: TagsList(
-                      tagsList: dummy.specialities.toList(),
+                      tagsList: widget.tutor.specialties!.split(",").toList(),
                       selectFirstItem: false,
                       readOnly: true,
                     ),
@@ -269,7 +285,7 @@ class _TutorDetailsState extends State<TutorDetails> {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(bottom: 20),
                     child: TagsList(
-                      tagsList: dummy.tutorLanguages.toList(),
+                      tagsList: widget.tutor.languages!.split(",").toList(),
                       selectFirstItem: false,
                       readOnly: true,
                     ),
@@ -293,7 +309,7 @@ class _TutorDetailsState extends State<TutorDetails> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(bottom: 20),
               child: Text(
-                dummy.interests,
+                widget.tutor.interests ?? "",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black26,
@@ -316,7 +332,7 @@ class _TutorDetailsState extends State<TutorDetails> {
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(bottom: 20),
               child: Text(
-                dummy.experience,
+                widget.tutor.experience ?? "",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black26,

@@ -11,6 +11,7 @@ class ReportTutorDialog extends StatefulWidget {
 }
 
 class _ReportTutorDialogState extends State<ReportTutorDialog> {
+  TextEditingController messageController = TextEditingController();
   bool isSubmitDisabled = true;
   @override
   Widget build(BuildContext context) {
@@ -46,6 +47,7 @@ class _ReportTutorDialogState extends State<ReportTutorDialog> {
             child: TextFormField(
               minLines: 5,
               maxLines: 10,
+              controller: messageController,
               decoration: InputDecoration(
                 hintText: i18n.reportTutorDialogPlaceholder,
                 border: OutlineInputBorder(),
@@ -81,6 +83,13 @@ class _ReportTutorDialogState extends State<ReportTutorDialog> {
                   primaryColor: Colors.white,
                   btnText: i18n.submitBtnText,
                   isDisabled: isSubmitDisabled,
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("${messageController.text}"),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

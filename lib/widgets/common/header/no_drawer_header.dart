@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/screens/courses/index.dart';
-import 'package:lettutor/screens/message.dart';
 import 'package:lettutor/screens/schedule.dart';
 import 'package:lettutor/screens/settings.dart';
 import 'package:lettutor/screens/tutors/index.dart';
@@ -18,7 +17,7 @@ class NoDrawerHeader extends StatefulWidget {
 class _NoDrawerHeaderState extends State<NoDrawerHeader> {
   final screens = [
     TutorsPage(),
-    MessagePage(),
+    // MessagePage(),
     SchedulePage(),
     SearchTutorPage(),
     CoursesPage(),
@@ -54,10 +53,10 @@ class _NoDrawerHeaderState extends State<NoDrawerHeader> {
             icon: Icon(Icons.home),
             label: i18n!.homeBottomNavItem,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: i18n.messageBottomNavItem,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.chat),
+          //   label: i18n.messageBottomNavItem,
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.schedule),
             label: i18n.upcomingBottomNavItem,

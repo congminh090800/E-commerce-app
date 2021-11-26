@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/models/tutor_dto.dart';
 import 'package:lettutor/widgets/tutors/tutors_list.dart';
 import 'package:lettutor/widgets/tutors/welcome_banner.dart';
 
@@ -13,9 +18,31 @@ class TutorsPage extends StatefulWidget {
 }
 
 class _TutorsPageState extends State<TutorsPage> {
+  List<TutorDTO> tutors = [];
+  @override
+  void initState() {
+    super.initState();
+    this.loadJsonData();
+  }
+
+  Future<void> loadJsonData() async {
+    var jsonText = await rootBundle.loadString("assets/tutors_dummy.json");
+    Iterable i = jsonDecode(jsonText);
+    List<TutorDTO>? result =
+        List<TutorDTO>.from(i.map((tutor) => TutorDTO.fromJson(tutor)));
+    setState(() {
+      if (result == null) {
+        tutors = [];
+      } else {
+        tutors = result;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
+    inspect(tutors);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -44,7 +71,9 @@ class _TutorsPageState extends State<TutorsPage> {
                             ),
                           ),
                         ),
-                        TutorsList(),
+                        TutorsList(
+                          tutors: this.tutors,
+                        ),
                       ],
                     ),
                   ),

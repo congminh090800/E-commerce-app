@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:lettutor/models/review.dart';
+import 'package:lettutor/models/feedback_dto.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ReviewListTile extends StatefulWidget {
-  const ReviewListTile({Key? key}) : super(key: key);
-
+  const ReviewListTile({Key? key, required this.data}) : super(key: key);
+  final FeedbackDTO data;
   @override
   _ReviewListTileState createState() => _ReviewListTileState();
 }
@@ -29,7 +29,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: NetworkImage(
-                  "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                  widget.data.firstInfo!.avatar ?? "",
                 ),
                 backgroundColor: Colors.transparent,
               ),
@@ -44,7 +44,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
                     children: [
                       Container(
                         child: Text(
-                          "Khanh Uyen",
+                          widget.data.firstInfo!.name ?? "default",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black54,
@@ -56,7 +56,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
                       ),
                       Container(
                         child: Text(
-                          timeago.format(dummyReview.createdAt),
+                          timeago.format(widget.data.createdAt!),
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black26,
@@ -68,7 +68,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: RatingBar.builder(
-                      initialRating: dummyReview.rating,
+                      initialRating: widget.data.rating!.toDouble(),
                       minRating: 0,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -87,7 +87,7 @@ class _ReviewListTileState extends State<ReviewListTile> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      dummyReview.comment,
+                      widget.data.content ?? "",
                       textAlign: TextAlign.left,
                     ),
                   )
@@ -100,11 +100,3 @@ class _ReviewListTileState extends State<ReviewListTile> {
     );
   }
 }
-
-var dummyReview = Review(
-  "1",
-  5.0,
-  "1",
-  "Ms April is funnn",
-  DateTime.now(),
-);

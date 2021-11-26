@@ -1,6 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:lettutor/models/feedback_dto.dart';
 import 'package:lettutor/models/schedule_dto.dart';
 
+part 'tutor_dto.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class TutorDTO {
   String? id;
   String? userId;
@@ -12,7 +16,8 @@ class TutorDTO {
   String? email;
   String? experience;
   String? facebook;
-  List<FeedbackDTO> feedbacks = [];
+  @JsonKey(nullable: true)
+  List<FeedbackDTO>? feedbacks;
   String? google;
   String? interests;
   bool? isActivated;
@@ -30,7 +35,8 @@ class TutorDTO {
   bool? requestPassword;
   String? requireNote;
   String? resume;
-  List<ScheduleDTO> schedules = [];
+  @JsonKey(nullable: true)
+  List<ScheduleDTO>? schedules;
   String? specialties;
   String? targetStudent;
   int? timezone;
@@ -75,4 +81,7 @@ class TutorDTO {
       this.createdAt,
       this.deletedAt,
       this.updatedAt);
+  factory TutorDTO.fromJson(Map<String, dynamic> json) =>
+      _$TutorDTOFromJson(json);
+  Map<String, dynamic> toJson() => _$TutorDTOToJson(this);
 }

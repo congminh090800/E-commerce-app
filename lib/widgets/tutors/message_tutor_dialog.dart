@@ -9,6 +9,8 @@ class MessageTutorDialog extends StatefulWidget {
 }
 
 class _MessageTutorDialogState extends State<MessageTutorDialog> {
+  List<String> messages = [];
+  TextEditingController messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,8 +19,44 @@ class _MessageTutorDialogState extends State<MessageTutorDialog> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
+            child: ListView(
+              shrinkWrap: true,
+              children: messages
+                  .map(
+                    (mess) => Container(
+                        margin: EdgeInsets.only(
+                          top: 10,
+                          bottom: 10,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Flexible(
+                              child: DecoratedBox(
+                                child: Text(
+                                  " " + mess + " ",
+                                  maxLines: 20,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      height: 2),
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  )
+                  .toList(),
+            ),
+          ),
+          Container(
             padding: EdgeInsets.only(bottom: 20),
             child: TextFormField(
+              controller: messageController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -30,6 +68,12 @@ class _MessageTutorDialogState extends State<MessageTutorDialog> {
                     Icons.send,
                     color: Colors.blue,
                   ),
+                  onTap: () {
+                    setState(() {
+                      messages.add(messageController.text);
+                      messageController.clear();
+                    });
+                  },
                 ),
               ),
             ),

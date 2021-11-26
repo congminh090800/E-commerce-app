@@ -1,5 +1,9 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:lettutor/models/schedule_detail_dto.dart';
 
+part 'schedule_dto.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class ScheduleDTO {
   String? id;
   DateTime? createdAt;
@@ -10,7 +14,8 @@ class ScheduleDTO {
   String? startTime;
   int? startTimestamp;
   String? tutorId;
-  List<ScheduleDetailDTO> scheduleDetailInfo = [];
+  @JsonKey(nullable: true)
+  List<ScheduleDetailDTO>? scheduleDetailInfo;
 
   ScheduleDTO(
       this.id,
@@ -23,4 +28,7 @@ class ScheduleDTO {
       this.startTimestamp,
       this.tutorId,
       this.scheduleDetailInfo);
+  factory ScheduleDTO.fromJson(Map<String, dynamic> json) =>
+      _$ScheduleDTOFromJson(json);
+  Map<String, dynamic> toJson() => _$ScheduleDTOToJson(this);
 }
