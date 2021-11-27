@@ -1,0 +1,81 @@
+{
+  "id": "54d95689-d13f-416c-8b03-90703b801d77",
+  "email": "qson.ng+1@gmail.com",
+  "name": "Super Ru",
+  "avatar": "https://dev.api.lettutor.com/avatar/54d95689-d13f-416c-8b03-90703b801d77avatar1630739024841.png",
+  "country": "VN",
+  "phone": "0288888886",
+  "roles": [
+    "student",
+    "tutor",
+    "CHANGE_PASSWORD"
+  ],
+  "language": null,
+  "birthday": "1990-11-28",
+  "isActivated": true,
+  "tutorInfo": {
+    "id": "dce58911-45e7-4c97-92dd-ada2456b05fc",
+    "userId": "54d95689-d13f-416c-8b03-90703b801d77",
+    "video": "https://api.tutoring.letstudy.io/video/54d95689-d13f-416c-8b03-90703b801d77video1630739024841.mp4",
+    "bio": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+    "education": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+    "experience": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+    "profession": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+    "accent": null,
+    "targetStudent": "Intermediate",
+    "interests": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n\n",
+    "languages": "en",
+    "specialties": "business-english,conversational-english,english-for-kids,ielts,toeic",
+    "resume": null,
+    "isActivated": true,
+    "isNative": true,
+    "createdAt": "2021-09-04T07:03:45.000Z",
+    "updatedAt": "2021-09-04T07:03:45.000Z"
+  },
+  "walletInfo": {
+    "id": "6747b416-3c50-4283-af79-ee3ad277339a",
+    "userId": "54d95689-d13f-416c-8b03-90703b801d77",
+    "amount": "350000",
+    "isBlocked": false,
+    "createdAt": "2021-09-04T06:57:15.325Z",
+    "updatedAt": "2021-11-27T18:03:47.563Z",
+    "bonus": 0
+  },
+  "feedbacks": [],
+  "courses": [],
+  "requireNote": null,
+  "level": "BEGINNER",
+  "learnTopics": [
+    {
+      "id": 4,
+      "key": "business-english",
+      "name": "Business English"
+    }
+  ],
+  "testPreparations": [],
+  "isPhoneActivated": true,
+  "timezone": 7,
+  "referralInfo": {
+    "id": 171,
+    "referralCode": "8SY6S8JTOA",
+    "userId": "54d95689-d13f-416c-8b03-90703b801d77",
+    "referralPackId": 1,
+    "createdAt": "2021-10-14T15:40:03.881Z",
+    "updatedAt": "2021-10-14T15:40:03.881Z",
+    "referralPackInfo": {
+      "id": 1,
+      "earnPercent": 5,
+      "isActive": true,
+      "createdAt": "2021-09-29T14:14:48.290Z",
+      "updatedAt": "2021-09-29T14:14:48.290Z"
+    }
+  },
+  "avgRating": 0,
+  "priceOfEachSession": {
+    "id": "0e5574d5-922f-4809-8af1-a06ed3205188",
+    "key": "pricePerSession",
+    "price": "100000",
+    "createdAt": "2021-06-10T14:53:56.032Z",
+    "updatedAt": "2021-06-10T14:53:56.032Z"
+  }
+}

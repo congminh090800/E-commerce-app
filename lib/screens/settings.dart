@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/models/user_dto.dart';
 import 'package:lettutor/screens/history.dart';
 import 'package:lettutor/screens/home.dart';
 import 'package:lettutor/screens/profile.dart';
@@ -19,6 +24,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  UserDTO? user;
   displayDialog(BuildContext context, String title, Widget content) {
     Navigator.push(
       context,
@@ -30,9 +36,25 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  Future<void> loadJsonData() async {
+    var jsonText = await rootBundle.loadString("assets/user_dummy.json");
+    Map<String, dynamic> mapper = jsonDecode(jsonText);
+    UserDTO result = UserDTO.fromJson(mapper);
+    setState(() {
+      user = result;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadJsonData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
+    inspect(user);
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -65,7 +87,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   displayDialog(
                     context,
                     i18n.viewFeedBackBtnText,
-                    ReviewsTutorDialog(),
+                    ReviewsTutorDialog(
+                      feedbacks: user!.feedbacks,
+                    ),
                   ),
                 },
               ),

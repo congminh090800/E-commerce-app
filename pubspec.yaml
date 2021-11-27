@@ -69,6 +69,8 @@ flutter:
     - assets/tutors_dummy.json
     - assets/booking_dummy.json
     - assets/total_hour_dummy.json
+    - assets/schedule_calendar_dummy.json
+    - assets/user_dummy.json
   fonts:
     - family: Roboto
       fonts:

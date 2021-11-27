@@ -15,7 +15,7 @@ class ScheduleDetailDTO {
   int? startPeriodTimestamp;
   @JsonKey(nullable: true)
   List<BookingDTO>? bookingInfo;
-
+  bool? isBooked;
   ScheduleDetailDTO(
       this.id,
       this.createdAt,
@@ -25,7 +25,8 @@ class ScheduleDetailDTO {
       this.scheduleId,
       this.startPeriod,
       this.startPeriodTimestamp,
-      this.bookingInfo);
+      this.bookingInfo,
+      this.isBooked);
   factory ScheduleDetailDTO.fromJson(Map<String, dynamic> json) =>
       _$ScheduleDetailDTOFromJson(json);
   Map<String, dynamic> toJson() => _$ScheduleDetailDTOToJson(this);
