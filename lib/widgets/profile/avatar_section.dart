@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:lettutor/models/user_dto.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
 
 class AvatarSection extends StatefulWidget {
-  const AvatarSection({Key? key}) : super(key: key);
-
+  const AvatarSection({Key? key, required this.user}) : super(key: key);
+  final UserDTO user;
   @override
   _AvatarSectionState createState() => _AvatarSectionState();
 }
@@ -21,9 +23,12 @@ class _AvatarSectionState extends State<AvatarSection> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
+    String? imagePath = "";
+    final ImagePicker picker = ImagePicker();
     return Container(
       padding: EdgeInsets.all(30),
       decoration: BoxDecoration(
@@ -55,15 +60,14 @@ class _AvatarSectionState extends State<AvatarSection> {
                   child: CircleAvatar(
                     radius: 130,
                     backgroundImage: NetworkImage(
-                      "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                      widget.user.avatar!,
                     ),
                     backgroundColor: Colors.transparent,
                     child: Container(
                       alignment: Alignment.bottomRight,
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundColor:
-                        Color.fromRGBO(0, 113, 240, 1),
+                        backgroundColor: Color.fromRGBO(0, 113, 240, 1),
                         child: Icon(
                           Icons.edit,
                           color: Colors.white,
@@ -72,7 +76,15 @@ class _AvatarSectionState extends State<AvatarSection> {
                     ),
                   ),
                 ),
-                onTap: () => {print("Upload photo")},
+                onTap: () async {
+                  final XFile? image =
+                      await picker.pickImage(source: ImageSource.gallery);
+                  if (image != null) {
+                    setState(() {
+                      imagePath = image.path;
+                    });
+                  }
+                },
               ),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
@@ -81,13 +93,12 @@ class _AvatarSectionState extends State<AvatarSection> {
             margin: EdgeInsets.only(bottom: 10),
             child: Text(
               "Super Ru",
-              style: TextStyle(
-                  fontSize: 24, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
           ),
           Container(
             child: Text(
-              "ID: " + "54d95689-d13f-416c-8b03-90703b801d77",
+              "ID: " + (widget.user.id!),
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.black54,
@@ -107,7 +118,9 @@ class _AvatarSectionState extends State<AvatarSection> {
                 displayDialog(
                   context,
                   i18n.profilePageOthersReivewYou,
-                  ReviewsTutorDialog(),
+                  ReviewsTutorDialog(
+                    feedbacks: widget.user.feedbacks,
+                  ),
                 ),
               },
             ),

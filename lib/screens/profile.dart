@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/models/user_dto.dart';
 import 'package:lettutor/widgets/profile/avatar_section.dart';
 import 'package:lettutor/widgets/profile/common_information.dart';
 import 'package:lettutor/widgets/profile/tutor_information.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
+  const ProfilePage({Key? key, required this.user}) : super(key: key);
+  final UserDTO user;
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -21,7 +22,9 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
         child: Column(
           children: [
-            AvatarSection(),
+            AvatarSection(
+              user: widget.user,
+            ),
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -37,7 +40,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            CommonInformation(),
+            CommonInformation(
+              user: widget.user,
+            ),
             Container(
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -53,7 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            TutorInformation(),
+            TutorInformation(
+              user: widget.user,
+            ),
           ],
         ),
       ),

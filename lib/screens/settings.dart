@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,7 +53,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    inspect(user);
+    print(user);
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -71,7 +70,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   displayDialog(
                     context,
                     i18n.viewProfileBtnText,
-                    ProfilePage(),
+                    ProfilePage(
+                      user: user!,
+                    ),
                   ),
                 },
               ),

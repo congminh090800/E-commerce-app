@@ -42,6 +42,8 @@ dependencies:
   json_annotation: ^4.3.0
   flutter_redux: ^0.8.2
   redux: ^5.0.0
+  image_picker: ^0.8.4+4
+  video_player: ^2.2.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

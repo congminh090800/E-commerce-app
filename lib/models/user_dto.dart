@@ -13,7 +13,7 @@ class UserDTO {
   DateTime? updatedAt;
   String? avatar;
   int? avgRating;
-  String? birthay;
+  String? birthday;
   String? country;
   String? email;
   String? name;
@@ -38,7 +38,7 @@ class UserDTO {
       this.updatedAt,
       this.avatar,
       this.avgRating,
-      this.birthay,
+      this.birthday,
       this.country,
       this.email,
       this.name,
