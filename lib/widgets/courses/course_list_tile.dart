@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/models/course_dto.dart';
 import 'package:lettutor/screens/courses/course_details.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 
 class CourseListTile extends StatefulWidget {
-  const CourseListTile({Key? key, this.readOnly = false}) : super(key: key);
+  const CourseListTile({Key? key, this.readOnly = false, this.data})
+      : super(key: key);
   final bool readOnly;
+  final CourseDTO? data;
   @override
   _CourseListTileState createState() => _CourseListTileState();
 }
@@ -26,7 +29,12 @@ class _CourseListTileState extends State<CourseListTile> {
     return InkWell(
       onTap: () {
         if (widget.readOnly == false) {
-          displayDialog(context, "", CourseDetails());
+          displayDialog(
+              context,
+              "",
+              CourseDetails(
+                courseDetail: widget.data!,
+              ));
         }
       },
       child: Container(
@@ -41,7 +49,7 @@ class _CourseListTileState extends State<CourseListTile> {
           child: Column(
             children: [
               Image.network(
-                "https://camblycurriculumicons.s3.amazonaws.com/5e2b895e541a832674533c18?h=d41d8cd98f00b204e9800998ecf8427e",
+                widget.data!.imageUrl!,
                 fit: BoxFit.fill,
               ),
               SizedBox(
@@ -54,7 +62,7 @@ class _CourseListTileState extends State<CourseListTile> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "New Basic Conversation Topics",
+                      widget.data!.name!,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
@@ -65,7 +73,7 @@ class _CourseListTileState extends State<CourseListTile> {
                       height: 12,
                     ),
                     Text(
-                      "Gain confidence speaking about familiar topics",
+                      widget.data!.description!,
                       style: TextStyle(
                         fontSize: 16,
                         color: Color.fromRGBO(128, 128, 128, 1),
@@ -78,7 +86,10 @@ class _CourseListTileState extends State<CourseListTile> {
                       ),
                     if (widget.readOnly == false)
                       Text(
-                        "Beginner - 0 lessons",
+                        widget.data!.categories!.elementAt(0).key! +
+                            " - " +
+                            widget.data!.topics!.length.toString() +
+                            " lesson(s)",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black.withOpacity(0.85)),

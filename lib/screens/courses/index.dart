@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lettutor/models/course_dto.dart';
 import 'package:lettutor/widgets/courses/course_list_tile.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 
@@ -12,7 +16,24 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
+  List<CourseDTO> courses = [];
   var sortValue;
+  @override
+  void initState() {
+    super.initState();
+    this.loadJsonData();
+  }
+
+  Future<void> loadJsonData() async {
+    var jsonText = await rootBundle.loadString("assets/course_dummy.json");
+    Iterable i = jsonDecode(jsonText);
+    List<CourseDTO>? result =
+        List<CourseDTO>.from(i.map((course) => CourseDTO.fromJson(course)));
+    setState(() {
+      courses = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
@@ -180,11 +201,11 @@ class _CoursesPageState extends State<CoursesPage> {
             ListView(
               primary: false,
               shrinkWrap: true,
-              children: [
-                CourseListTile(),
-                CourseListTile(),
-                CourseListTile(),
-              ],
+              children: courses
+                  .map((e) => CourseListTile(
+                        data: e,
+                      ))
+                  .toList(),
             )
           ],
         ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/models/course_dto.dart';
 import 'package:lettutor/widgets/courses/course_list_tile.dart';
 
 class CourseDetails extends StatefulWidget {
-  const CourseDetails({Key? key}) : super(key: key);
-
+  const CourseDetails({Key? key, required this.courseDetail}) : super(key: key);
+  final CourseDTO courseDetail;
   @override
   _CourseDetailsState createState() => _CourseDetailsState();
 }
@@ -22,6 +23,7 @@ class _CourseDetailsState extends State<CourseDetails> {
               padding: EdgeInsets.symmetric(horizontal: 25),
               child: CourseListTile(
                 readOnly: true,
+                data: widget.courseDetail,
               ),
             ),
             Container(
@@ -74,7 +76,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                     padding: EdgeInsets.only(left: 35),
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
-                      "It can be intimidating to speak with a foreigner, no matter how much grammar and vocabulary you've mastered. If you have basic knowledge of English but have not spent much time speaking, this course will help you ease into your first English conversations.",
+                      widget.courseDetail.reason!,
                       style: TextStyle(fontSize: 14, height: 1.5),
                     ),
                   ),
@@ -101,7 +103,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                     padding: EdgeInsets.only(left: 35),
                     margin: EdgeInsets.only(bottom: 15),
                     child: Text(
-                      "This course covers vocabulary at the CEFR A2 level. You will build confidence while learning to speak about a variety of common, everyday topics. In addition, you will build implicit grammar knowledge as your tutor models correct answers and corrects your mistakes.",
+                      widget.courseDetail.purpose!,
                       style: TextStyle(fontSize: 14, height: 1.5),
                     ),
                   ),
@@ -126,7 +128,7 @@ class _CourseDetailsState extends State<CourseDetails> {
                           size: 20,
                         ),
                         Text(
-                          "Beginner",
+                          widget.courseDetail.categories!.elementAt(0).key!,
                           style: TextStyle(
                             fontSize: 16,
                           ),
@@ -155,7 +157,8 @@ class _CourseDetailsState extends State<CourseDetails> {
                           size: 20,
                         ),
                         Text(
-                          "0 lessons",
+                          widget.courseDetail.topics!.length.toString() +
+                              " lessons",
                           style: TextStyle(
                             fontSize: 16,
                           ),
@@ -179,10 +182,14 @@ class _CourseDetailsState extends State<CourseDetails> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       primary: false,
-                      itemCount: 10,
+                      itemCount: widget.courseDetail.topics!.length,
                       itemBuilder: (context, position) {
                         return Text(
-                          (position + 1).toString() + ". " + "content",
+                          (position + 1).toString() +
+                              ". " +
+                              widget.courseDetail.topics!
+                                  .elementAt(position)
+                                  .name!,
                           style: TextStyle(
                             fontSize: 16,
                             wordSpacing: 1.5,
