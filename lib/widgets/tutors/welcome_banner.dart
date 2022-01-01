@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/constants/http.dart';
 import 'package:lettutor/models/booking_dto.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/provider/locale_provider.dart';
 import 'package:lettutor/screens/videocall.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
@@ -30,11 +32,19 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
     });
   }
 
-  Future<void> loadTotalLearntTime() async {
-    var jsonText = await rootBundle.loadString("assets/total_hour_dummy.json");
-    Map<String, dynamic> mapper = jsonDecode(jsonText);
-    setState(() {
-      totalLearntTime = mapper["total"] ?? 0;
+  void getTotalTime() {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      var dio = Http().client;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      var res = await dio.get("call/total");
+      setState(() {
+        totalLearntTime = res.data["total"].toDouble() ?? 0;
+      });
     });
   }
 
@@ -51,7 +61,7 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
   void initState() {
     super.initState();
     this.loadBookingJson();
-    this.loadTotalLearntTime();
+    this.getTotalTime();
   }
 
   @override

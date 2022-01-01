@@ -25,7 +25,11 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
             iconTheme: IconThemeData(
               color: Colors.black,
             ),
-            leading: BackButton(),
+            leading: BackButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ],
         body: MediaQuery.removePadding(

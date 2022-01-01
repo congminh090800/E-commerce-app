@@ -4,7 +4,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lettutor/models/user_dto.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
@@ -12,7 +12,7 @@ import 'package:video_player/video_player.dart';
 
 class TutorInformation extends StatefulWidget {
   const TutorInformation({Key? key, required this.user}) : super(key: key);
-  final UserDTO user;
+  final User user;
   @override
   _TutorInformationState createState() => _TutorInformationState();
 }
@@ -27,7 +27,7 @@ class _TutorInformationState extends State<TutorInformation> {
   Future<void>? initializeVideoPlayerFuture;
   VideoPlayerController? newVidController;
   Future<void>? initializeNewVideoPlayer;
-  UserDTO? userData;
+  User? userData;
   var interestsController;
   var educationController;
   var expController;

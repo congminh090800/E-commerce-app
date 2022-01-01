@@ -1,12 +1,14 @@
-import 'dart:convert';
+import 'dart:developer';
 
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/tutor_dto.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/tutor.dart';
+import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
 import 'package:lettutor/widgets/tutors/tutors_list.dart';
+import 'package:provider/provider.dart';
 
 class SearchTutorPage extends StatefulWidget {
   const SearchTutorPage({Key? key}) : super(key: key);
@@ -16,44 +18,84 @@ class SearchTutorPage extends StatefulWidget {
 }
 
 class _SearchTutorPageState extends State<SearchTutorPage> {
-  List<TutorDTO> tutors = [];
+  List<Tutor> tutors = [];
+  int count = 0;
+  int perPage = 5;
+  int page = 1;
   @override
   void initState() {
     super.initState();
-    this.loadJsonData();
+    getTutors();
   }
 
-  Future<void> loadJsonData() async {
-    var jsonText = await rootBundle.loadString("assets/tutors_dummy.json");
-    Iterable i = jsonDecode(jsonText);
-    List<TutorDTO>? result =
-        List<TutorDTO>.from(i.map((tutor) => TutorDTO.fromJson(tutor)));
-    setState(() {
-      if (result == null) {
-        tutors = [];
-      } else {
-        tutors = result;
-      }
-    });
+  var tagsList = [
+    "business-english",
+    "conversational-english",
+    "english-for-kids",
+    "ielts",
+    "toeic",
+    "starters",
+    "movers",
+    "flyers",
+    "ket",
+    "pet",
+    "toefl"
+  ];
+  void getTutors() {
+    try {
+      var dio = Http().client;
+      var query = {
+        'perPage': perPage.toString(),
+        'page': page.toString(),
+      };
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+        var accessToken = Provider.of<AuthProvider>(context, listen: false)
+            .auth
+            .tokens!
+            .access!
+            .token;
+        dio.options.headers["Authorization"] = "Bearer $accessToken";
+        var res = await dio.get(
+          "tutor/more",
+          queryParameters: query,
+        );
+        Iterable favIter = res.data["favoriteTutor"];
+        List<Tutor> favTutors = List<Tutor>.from(
+          await Future.wait(
+            favIter.map(
+              (tutor) async {
+                String id = tutor["secondId"];
+                var tutorRes = await dio.get("tutor/$id");
+                var detail = tutorRes.data;
+                var data = Tutor.fromJson(detail);
+                return data;
+              },
+            ),
+          ),
+        );
+        Iterable iter = res.data["tutors"]["rows"];
+        List<Tutor> paginatedData =
+            List<Tutor>.from(iter.map((tutor) => Tutor.fromJson(tutor)));
+        paginatedData = paginatedData.map((element) {
+          if (favTutors
+              .any((favTutor) => favTutor.user?.email == element.email)) {
+            element.isFavorite = true;
+          }
+          return element;
+        }).toList();
+        setState(() {
+          tutors.addAll(paginatedData);
+          count = res.data["tutors"]["count"];
+        });
+      });
+    } catch (e) {
+      inspect(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    var tagsList = [
-      i18n!.allType,
-      i18n.engForKidsType,
-      i18n.engForBusinessType,
-      i18n.conversationalType,
-      i18n.startersType,
-      i18n.moversType,
-      i18n.flytersType,
-      i18n.ketType,
-      i18n.petType,
-      i18n.ieltsType,
-      i18n.toeflType,
-      i18n.toeicType
-    ];
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -73,7 +115,7 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                   contentPadding: EdgeInsets.all(0),
                   filled: true,
                   fillColor: Colors.black12,
-                  hintText: i18n.searchTutorPlaceholder,
+                  hintText: i18n!.searchTutorPlaceholder,
                   prefixIcon: GestureDetector(
                     child: Icon(Icons.search),
                   ),
@@ -85,52 +127,74 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
               child: TagsList(
                 tagsList: tagsList,
                 isHorizontal: true,
-                selectFirstItem: true,
               ),
               padding: EdgeInsets.only(bottom: 10),
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(bottom: 20),
-              child: Row(
-                children: [
-                  Text(i18n.searchNationality + ": "),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white54,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.black38,
-                          width: 1,
-                        ),
-                      ),
-                      child: CountryCodePicker(
-                        onChanged: (CountryCode countryCode) {
-                          print(
-                            "New Country selected: " + countryCode.toString(),
-                          );
-                        },
-                        initialSelection: 'VN',
-                        showOnlyCountryWhenClosed: true,
-                        showCountryOnly: true,
-                        padding: EdgeInsets.all(0),
-                        alignLeft: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Container(
+            //   alignment: Alignment.centerLeft,
+            //   margin: EdgeInsets.only(bottom: 20),
+            //   child: Row(
+            //     children: [
+            //       Text(i18n.searchNationality + ": "),
+            //       Expanded(
+            //         child: Container(
+            //           decoration: BoxDecoration(
+            //             color: Colors.white54,
+            //             borderRadius: BorderRadius.circular(10),
+            //             border: Border.all(
+            //               color: Colors.black38,
+            //               width: 1,
+            //             ),
+            //           ),
+            //           child: CountryCodePicker(
+            //             onChanged: (CountryCode countryCode) {
+            //               print(
+            //                 "New Country selected: " + countryCode.toString(),
+            //               );
+            //             },
+            //             initialSelection: 'VN',
+            //             showOnlyCountryWhenClosed: true,
+            //             showCountryOnly: true,
+            //             padding: EdgeInsets.all(0),
+            //             alignLeft: true,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(bottom: 20),
               child: Container(
                 child: Column(
                   children: [
-                    TutorsList(
-                      tutors: this.tutors,
-                    ),
+                    tutors.length > 0
+                        ? TutorsList(
+                            tutors: this.tutors,
+                          )
+                        : Container(
+                            child: Text(
+                              "No data",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.only(top: 20),
+                          ),
+                    perPage * page < count
+                        ? Container(
+                            child: CustomizedButton(
+                              btnText: "Load more",
+                              onTap: () {
+                                setState(() {
+                                  page = page + 1;
+                                });
+                                getTutors();
+                              },
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),

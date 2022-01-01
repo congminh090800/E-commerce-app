@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/user_dto.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/screens/history.dart';
 import 'package:lettutor/screens/home.dart';
 import 'package:lettutor/screens/profile.dart';
@@ -14,6 +12,7 @@ import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/settings/select_lang_dialog.dart';
 import 'package:lettutor/widgets/settings/setting_button.dart';
 import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  UserDTO? user;
+  User user = User();
   displayDialog(BuildContext context, String title, Widget content) {
     Navigator.push(
       context,
@@ -35,25 +34,21 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  Future<void> loadJsonData() async {
-    var jsonText = await rootBundle.loadString("assets/user_dummy.json");
-    Map<String, dynamic> mapper = jsonDecode(jsonText);
-    UserDTO result = UserDTO.fromJson(mapper);
-    setState(() {
-      user = result;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    loadJsonData();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      var authUser =
+          Provider.of<AuthProvider>(context, listen: false).auth.user;
+      setState(() {
+        user = authUser!;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    print(user);
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -71,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     context,
                     i18n.viewProfileBtnText,
                     ProfilePage(
-                      user: user!,
+                      user: user,
                     ),
                   ),
                 },
@@ -89,7 +84,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     context,
                     i18n.viewFeedBackBtnText,
                     ReviewsTutorDialog(
-                      feedbacks: user!.feedbacks,
+                      feedbacks: user.tutorInfo!.feedbacks != null
+                          ? user.tutorInfo!.feedbacks
+                          : user.feedbacks,
                     ),
                   ),
                 },

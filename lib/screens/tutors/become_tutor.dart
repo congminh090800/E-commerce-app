@@ -40,6 +40,19 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
   List<String> specialties = [];
   VideoPlayerController? videoController;
   Future<void>? initializeVideoPlayerFuture;
+  var tagsList = [
+    "business-english",
+    "conversational-english",
+    "english-for-kids",
+    "ielts",
+    "toeic",
+    "starters",
+    "movers",
+    "flyers",
+    "ket",
+    "pet",
+    "toefl"
+  ];
   @override
   void initState() {
     super.initState();
@@ -51,31 +64,18 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
 
   @override
   void dispose() {
-    videoController!.dispose();
+    videoController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    var tagsList = [
-      i18n!.engForKidsType,
-      i18n.engForBusinessType,
-      i18n.conversationalType,
-      i18n.startersType,
-      i18n.moversType,
-      i18n.flytersType,
-      i18n.ketType,
-      i18n.petType,
-      i18n.ieltsType,
-      i18n.toeflType,
-      i18n.toeicType
-    ];
     List<Step> getSteps() => [
           Step(
             isActive: _currentStep >= 0,
             title: Text(
-              i18n.profileTutorRegisteringStep,
+              i18n!.profileTutorRegisteringStep,
               overflow: TextOverflow.ellipsis,
             ),
             content: Form(
@@ -634,7 +634,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
               _currentStep < getSteps().length - 1
                   ? Expanded(
                       child: ElevatedButton(
-                        child: Text(i18n.tutorRegisterBackBtnText),
+                        child: Text(i18n!.tutorRegisterBackBtnText),
                         onPressed: onStepCancel,
                       ),
                     )
@@ -645,8 +645,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
               Expanded(
                 child: ElevatedButton(
                   child: Text(_currentStep == getSteps().length - 1
-                      ? i18n.approvalStepBackBtnText
-                      : i18n.tutorRegisterNextBtnText),
+                      ? i18n!.approvalStepBackBtnText
+                      : i18n!.tutorRegisterNextBtnText),
                   onPressed: onStepContinue,
                 ),
               ),

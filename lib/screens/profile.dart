@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/user_dto.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/profile/avatar_section.dart';
 import 'package:lettutor/widgets/profile/common_information.dart';
 import 'package:lettutor/widgets/profile/tutor_information.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key, required this.user}) : super(key: key);
-  final UserDTO user;
+  final User user;
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }

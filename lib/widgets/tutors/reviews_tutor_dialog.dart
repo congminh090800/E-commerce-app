@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/feedback_dto.dart';
+import 'package:lettutor/real_models/feedback.dart' as feedbackModel;
 import 'package:lettutor/widgets/tutors/review_list_tile.dart';
 
 class ReviewsTutorDialog extends StatefulWidget {
   const ReviewsTutorDialog({Key? key, this.feedbacks = const []})
       : super(key: key);
-  final List<FeedbackDTO>? feedbacks;
+  final List<feedbackModel.Feedback>? feedbacks;
   @override
   _ReviewsTutorDialogState createState() => _ReviewsTutorDialogState();
 }

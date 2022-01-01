@@ -2,7 +2,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/user_dto.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
@@ -10,7 +10,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CommonInformation extends StatefulWidget {
   const CommonInformation({Key? key, required this.user}) : super(key: key);
-  final UserDTO user;
+  final User user;
   @override
   _CommonInformationState createState() => _CommonInformationState();
 }
@@ -18,7 +18,7 @@ class CommonInformation extends StatefulWidget {
 class _CommonInformationState extends State<CommonInformation> {
   final commonInfoForm = GlobalKey<FormState>();
   bool showDatePicker = false;
-  UserDTO? userData;
+  User? userData;
   TextEditingController? nameController;
   TextEditingController? emailController;
   TextEditingController? phoneController;
@@ -34,7 +34,13 @@ class _CommonInformationState extends State<CommonInformation> {
       emailController = TextEditingController(text: userData!.email);
       phoneController = TextEditingController(text: userData!.phone);
       country = userData!.country;
-      birthday = DateTime.parse(userData!.birthday ?? "2000-01-01");
+      List<String> dayStr = userData!.birthday!.split("-");
+      if (dayStr.length == 3) {
+        int year = int.tryParse(dayStr[0]) ?? 2000;
+        int month = int.tryParse(dayStr[1]) ?? 1;
+        int day = int.tryParse(dayStr[2]) ?? 1;
+        birthday = DateTime(year, month, day);
+      }
     });
   }
 

@@ -1,14 +1,15 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/tutor_dto.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/tutor.dart';
 import 'package:lettutor/widgets/tutors/tutors_list.dart';
 import 'package:lettutor/widgets/tutors/welcome_banner.dart';
+import 'package:provider/provider.dart';
 
 class TutorsPage extends StatefulWidget {
   const TutorsPage({Key? key}) : super(key: key);
@@ -18,31 +19,63 @@ class TutorsPage extends StatefulWidget {
 }
 
 class _TutorsPageState extends State<TutorsPage> {
-  List<TutorDTO> tutors = [];
+  List<Tutor> tutorsList = [];
   @override
   void initState() {
     super.initState();
-    this.loadJsonData();
+    this.getFavoriteTutor();
+    inspect(tutorsList);
   }
 
-  Future<void> loadJsonData() async {
-    var jsonText = await rootBundle.loadString("assets/tutors_dummy.json");
-    Iterable i = jsonDecode(jsonText);
-    List<TutorDTO>? result =
-        List<TutorDTO>.from(i.map((tutor) => TutorDTO.fromJson(tutor)));
-    setState(() {
-      if (result == null) {
-        tutors = [];
-      } else {
-        tutors = result;
-      }
-    });
+  void getFavoriteTutor() {
+    try {
+      var dio = Http().client;
+      var query = {
+        'perPage': '1',
+        'page': '1',
+      };
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+        var accessToken = Provider.of<AuthProvider>(context, listen: false)
+            .auth
+            .tokens!
+            .access!
+            .token;
+        dio.options.headers["Authorization"] = "Bearer $accessToken";
+        var res = await dio.get(
+          "tutor/more",
+          queryParameters: query,
+        );
+        Iterable i = res.data["favoriteTutor"];
+        List<Tutor>? result = List<Tutor>.from(
+          await Future.wait(
+            i.map(
+              (tutor) async {
+                if (tutor["secondInfo"] != null) {
+                  String id = tutor["secondId"];
+                  var tutorRes = await dio.get("tutor/$id");
+                  var detail = tutorRes.data;
+                  var data = Tutor.fromJson(detail);
+                  return data;
+                } else {
+                  return Tutor();
+                }
+              },
+            ),
+          ),
+        ).where((element) => element.id != null).toList();
+        setState(() {
+          tutorsList = result;
+        });
+      });
+    } catch (e) {
+      inspect(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    inspect(tutors);
+    inspect(tutorsList);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -72,7 +105,7 @@ class _TutorsPageState extends State<TutorsPage> {
                           ),
                         ),
                         TutorsList(
-                          tutors: this.tutors,
+                          tutors: tutorsList,
                         ),
                       ],
                     ),

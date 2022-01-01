@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:lettutor/models/feedback_dto.dart';
+import 'package:lettutor/real_models/feedback.dart' as feedbackModel;
 import 'package:timeago/timeago.dart' as timeago;
 
 class ReviewListTile extends StatefulWidget {
   const ReviewListTile({Key? key, required this.data}) : super(key: key);
-  final FeedbackDTO data;
+  final feedbackModel.Feedback data;
   @override
   _ReviewListTileState createState() => _ReviewListTileState();
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lettutor/models/user_dto.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/tutors/reviews_tutor_dialog.dart';
 
 class AvatarSection extends StatefulWidget {
   const AvatarSection({Key? key, required this.user}) : super(key: key);
-  final UserDTO user;
+  final User user;
   @override
   _AvatarSectionState createState() => _AvatarSectionState();
 }

@@ -27,11 +27,7 @@ class _BookCalendarDialogState extends State<BookCalendarDialog> {
     List<ScheduleDTO>? result = List<ScheduleDTO>.from(
         i.map((schedule) => ScheduleDTO.fromJson(schedule)));
     setState(() {
-      if (result == null) {
-        schedules = [];
-      } else {
-        schedules = result;
-      }
+      schedules = result;
     });
     this.getCalendarTiles();
   }

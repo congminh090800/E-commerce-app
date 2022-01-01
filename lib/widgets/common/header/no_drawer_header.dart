@@ -8,8 +8,8 @@ import 'package:lettutor/screens/tutors/search_tutor.dart';
 import 'package:lettutor/widgets/common/header/no_drawer_navbar.dart';
 
 class NoDrawerHeader extends StatefulWidget {
-  const NoDrawerHeader({Key? key}) : super(key: key);
-
+  const NoDrawerHeader({Key? key, this.tabNum = 0}) : super(key: key);
+  final int tabNum;
   @override
   _NoDrawerHeaderState createState() => _NoDrawerHeaderState();
 }
@@ -23,7 +23,15 @@ class _NoDrawerHeaderState extends State<NoDrawerHeader> {
     CoursesPage(),
     SettingsPage(),
   ];
+
   int current = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    current = widget.tabNum;
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);

@@ -38,21 +38,20 @@ class _CoursesPageState extends State<CoursesPage> {
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
     var categoriesTags = [
-      i18n!.allType,
-      i18n.engForKidsType,
-      i18n.engForBusinessType,
-      i18n.conversationalType,
-      i18n.startersType,
-      i18n.moversType,
-      i18n.flytersType,
-      i18n.ketType,
-      i18n.petType,
-      i18n.ieltsType,
-      i18n.toeflType,
-      i18n.toeicType
+      "business-english",
+      "conversational-english",
+      "english-for-kids",
+      "ielts",
+      "toeic",
+      "starters",
+      "movers",
+      "flyers",
+      "ket",
+      "pet",
+      "toefl"
     ];
     var levelsTag = [
-      i18n.allType,
+      i18n!.allType,
       i18n.levelBeginner,
       i18n.levelHigherBeginner,
       i18n.levelPreInter,
@@ -151,7 +150,6 @@ class _CoursesPageState extends State<CoursesPage> {
               child: TagsList(
                 tagsList: categoriesTags,
                 isHorizontal: true,
-                selectFirstItem: true,
               ),
               padding: EdgeInsets.only(bottom: 10),
             ),

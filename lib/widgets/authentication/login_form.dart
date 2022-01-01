@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/constants/http.dart';
 import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/real_models/auth.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/screens/reset_password.dart';
 import 'package:lettutor/screens/sign_up.dart';
 import 'package:lettutor/widgets/common/boiler_plate.dart';
@@ -23,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
   bool _showPassword = false;
   final _signInFormKey = GlobalKey<FormState>();
   TextEditingController emailController =
-      TextEditingController(text: 'teacher@lettutor.com');
+      TextEditingController(text: 'student@lettutor.com');
   TextEditingController passwordController =
       TextEditingController(text: '123456');
   Future<Auth?> login() async {
@@ -38,6 +39,11 @@ class _LoginFormState extends State<LoginForm> {
         data: body,
       );
       var auth = Auth.fromJson(res.data);
+      inspect(auth);
+      var accessToken = auth.tokens!.access!.token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      var resInfo = await dio.get("user/info");
+      auth.user = User.fromJson(resInfo.data["user"]);
       inspect(auth);
       return auth;
     } catch (e) {
