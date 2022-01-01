@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import "package:email_validator/email_validator.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/constants/http.dart';
 import 'package:lettutor/screens/sign_in.dart';
 import 'package:lettutor/widgets/common/boiler_plate.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
@@ -20,6 +23,26 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  Future<bool> signUp() async {
+    try {
+      var body = {
+        'email': emailController.text,
+        'password': passwordController.text,
+      };
+      var dio = Http().client;
+      var res = await dio.post(
+        'auth/register',
+        data: body,
+      );
+      inspect(res);
+      return true;
+    } catch (e) {
+      inspect(e);
+      print("Error in sign up");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
@@ -29,26 +52,26 @@ class _SignUpFormState extends State<SignUpForm> {
         key: _signUpFormKey,
         child: Column(
           children: [
-            Container(
-              padding: EdgeInsets.only(bottom: 24),
-              child: TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(width: 1),
-                  ),
-                  labelText: i18n!.nameLabelText.toUpperCase(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Required";
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.only(bottom: 24),
+            //   child: TextFormField(
+            //     controller: nameController,
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(10.0),
+            //         borderSide: BorderSide(width: 1),
+            //       ),
+            //       labelText: i18n!.nameLabelText.toUpperCase(),
+            //     ),
+            //     validator: (value) {
+            //       if (value == null || value.isEmpty) {
+            //         return "Required";
+            //       } else {
+            //         return null;
+            //       }
+            //     },
+            //   ),
+            // ),
             Container(
               padding: EdgeInsets.only(bottom: 24),
               child: TextFormField(
@@ -58,7 +81,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(width: 1),
                   ),
-                  labelText: i18n.emailLabel,
+                  labelText: i18n!.emailLabel,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -183,14 +206,18 @@ class _SignUpFormState extends State<SignUpForm> {
               padding: EdgeInsets.only(bottom: 24),
               child: SubmitButton(
                 btnText: i18n.signUpTextBtn,
-                onTap: () {
+                onTap: () async {
                   if (_signUpFormKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            "${nameController.text} ${emailController.text} ${passwordController.text}"),
-                      ),
-                    );
+                    bool result = await signUp();
+                    if (result == true) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => BoilerPlate(
+                            page: SignInPage(),
+                          ),
+                        ),
+                      );
+                    }
                   }
                 },
               ),

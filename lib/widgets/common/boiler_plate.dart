@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lettutor/l10n/l10n.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/provider/locale_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +18,15 @@ class _BoilerPlateState extends State<BoilerPlate> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => LocaleProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LocaleProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+      ],
       builder: (context, child) {
         var provider = Provider.of<LocaleProvider>(context);
         return MaterialApp(

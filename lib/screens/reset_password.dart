@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/screens/sign_in.dart';
+import 'package:lettutor/widgets/common/boiler_plate.dart';
 import 'package:lettutor/widgets/common/header/index.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 
@@ -15,6 +20,25 @@ class ResetPasswordPage extends StatefulWidget {
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   var _resetPassKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+  Future<bool> sendReset() async {
+    try {
+      var body = {
+        'email': emailController.text,
+      };
+      var dio = Http().client;
+      var res = await dio.post(
+        'user/forgotPassword',
+        data: body,
+      );
+      inspect(res);
+      return true;
+    } catch (e) {
+      inspect(e);
+      print("Error in reset password");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
@@ -72,13 +96,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
               SubmitButton(
                 btnText: i18n.sendResetLinkBtnText,
-                onTap: () {
+                onTap: () async {
                   if (_resetPassKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("${emailController.text}"),
-                      ),
-                    );
+                    bool result = await sendReset();
+                    if (result == true) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => BoilerPlate(
+                            page: SignInPage(),
+                          ),
+                        ),
+                      );
+                    }
                   }
                 },
               ),
