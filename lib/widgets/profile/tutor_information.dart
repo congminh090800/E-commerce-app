@@ -1,18 +1,26 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class TutorInformation extends StatefulWidget {
-  const TutorInformation({Key? key, required this.user}) : super(key: key);
+  const TutorInformation(
+      {Key? key, required this.user, required this.onUpdateInfo})
+      : super(key: key);
   final User user;
+  final Function onUpdateInfo;
   @override
   _TutorInformationState createState() => _TutorInformationState();
 }
@@ -34,7 +42,21 @@ class _TutorInformationState extends State<TutorInformation> {
   var professionController;
   var introController;
   String? language;
+  String videoPath = "";
   List<String> specialties = [];
+  var tagsList = [
+    "business-english",
+    "conversational-english",
+    "english-for-kids",
+    "ielts",
+    "toeic",
+    "starters",
+    "movers",
+    "flyers",
+    "ket",
+    "pet",
+    "toefl"
+  ];
   @override
   void initState() {
     super.initState();
@@ -76,23 +98,47 @@ class _TutorInformationState extends State<TutorInformation> {
     super.dispose();
   }
 
+  Future<void> updateTutorInfo(BuildContext context) async {
+    try {
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      // String fileName = imagePath.split('/').last;
+      var formData = FormData.fromMap({
+        "interests": interestsController.text,
+        "experience": expController.text,
+        "education": educationController.text,
+        "profession": professionController.text,
+        "bio": introController.text,
+        "targetStudent": _level.toString().split('.').last,
+        "specialties": specialties.join(","),
+        "video":
+            videoPath.isEmpty ? null : await MultipartFile.fromFile(videoPath),
+        "languages": language
+      });
+      await dio.post('tutor', data: formData);
+      widget.onUpdateInfo();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Update tutor data failed, try again later",
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      );
+      inspect(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.user);
     var i18n = AppLocalizations.of(context);
-    var tagsList = [
-      "business-english",
-      "conversational-english",
-      "english-for-kids",
-      "ielts",
-      "toeic",
-      "starters",
-      "movers",
-      "flyers",
-      "ket",
-      "pet",
-      "toefl"
-    ];
     return Form(
       key: tutorInfoForm,
       child: Container(
@@ -347,6 +393,7 @@ class _TutorInformationState extends State<TutorInformation> {
                     await picker.pickVideo(source: ImageSource.gallery);
                 if (video != null) {
                   setState(() {
+                    videoPath = video.path;
                     newVidController =
                         VideoPlayerController.file(File(video.path));
                     initializeNewVideoPlayer = newVidController!.initialize();
@@ -402,13 +449,9 @@ class _TutorInformationState extends State<TutorInformation> {
                   width: 150,
                   child: SubmitButton(
                     btnText: i18n.saveChangesBtnText,
-                    onTap: () {
+                    onTap: () async {
                       if (tutorInfoForm.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Saved"),
-                          ),
-                        );
+                        await updateTutorInfo(context);
                       }
                     },
                   ),

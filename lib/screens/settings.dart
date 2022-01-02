@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:lettutor/provider/auth_provider.dart';
@@ -49,6 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
+    inspect(user);
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -65,9 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   displayDialog(
                     context,
                     i18n.viewProfileBtnText,
-                    ProfilePage(
-                      user: user,
-                    ),
+                    ProfilePage(),
                   ),
                 },
               ),
@@ -138,6 +139,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     BecomeTutorPage(),
                   ),
                 },
+                isDisabled: user.roles?.contains("tutor") ?? false,
               ),
             ),
             Container(

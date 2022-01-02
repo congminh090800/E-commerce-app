@@ -285,7 +285,11 @@ class _TutorDetailsState extends State<TutorDetails> {
                                               (tutor.user != null
                                                   ? tutor.user!.name!
                                                   : tutor.name!),
-                                          ReportTutorDialog(),
+                                          ReportTutorDialog(
+                                            tutorId: tutor.user == null
+                                                ? tutor.userId!
+                                                : tutor.user!.id!,
+                                          ),
                                         ),
                                       },
                                     ),

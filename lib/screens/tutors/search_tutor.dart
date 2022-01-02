@@ -22,6 +22,7 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
   int count = 0;
   int perPage = 5;
   int page = 1;
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -43,6 +44,9 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
   ];
   void getTutors() {
     try {
+      setState(() {
+        loading = true;
+      });
       var dio = Http().client;
       var query = {
         'perPage': perPage.toString(),
@@ -86,10 +90,14 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
         setState(() {
           tutors.addAll(paginatedData);
           count = res.data["tutors"]["count"];
+          loading = false;
         });
       });
     } catch (e) {
       inspect(e);
+      setState(() {
+        loading = false;
+      });
     }
   }
 
@@ -173,15 +181,18 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                         ? TutorsList(
                             tutors: this.tutors,
                           )
-                        : Container(
-                            child: Text(
-                              "No data",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(top: 20),
-                          ),
+                        : loading == true
+                            ? Container()
+                            : Container(
+                                child: Text(
+                                  "No data",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.only(top: 20),
+                              ),
                     perPage * page < count
                         ? Container(
                             child: CustomizedButton(
@@ -192,6 +203,12 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                                 });
                                 getTutors();
                               },
+                              hasBorder: false,
+                              textSize: 20,
+                            ),
+                            margin: EdgeInsets.only(
+                              top: 16,
+                              bottom: 4,
                             ),
                           )
                         : Container(),
@@ -199,6 +216,12 @@ class _SearchTutorPageState extends State<SearchTutorPage> {
                 ),
               ),
             ),
+            loading == true
+                ? Container(
+                    child: CircularProgressIndicator(),
+                    padding: EdgeInsets.only(top: 20),
+                  )
+                : Container(),
           ],
         ),
       ),

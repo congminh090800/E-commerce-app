@@ -1,13 +1,20 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/tutors/tags_list.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:video_player/video_player.dart';
 
@@ -27,6 +34,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
   bool showDatePicker = false;
   Level? _level = Level.Beginner;
   String imagePath = "";
+  String videoPath = "";
   String countryCode = "";
   String language = "";
   final ImagePicker picker = ImagePicker();
@@ -56,10 +64,54 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
   @override
   void initState() {
     super.initState();
+    User authUser;
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      authUser =
+          Provider.of<AuthProvider>(context, listen: false).auth.user ?? User();
+      if (authUser.tutorInfo != null) {
+        setState(() {
+          _currentStep = 2;
+        });
+      }
+    });
     setState(() {
       countryCode = "VN";
       language = "VN";
     });
+  }
+
+  Future<bool> sendRequest(BuildContext context) async {
+    try {
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      var formData = FormData.fromMap({
+        'name': nameController.text,
+        'country': countryCode,
+        'birthday': DateFormat('yyyy-MM-dd').format(birthday ?? DateTime.now()),
+        'interests': interestsController.text,
+        'education': educationController.text,
+        'profession': professionController.text,
+        'experience': expController.text,
+        'bio': introController.text,
+        'languages': language,
+        'targetStudent': _level.toString().split('.').last,
+        'price': '50000',
+        'specialties': specialties.join(","),
+        'avatar': await MultipartFile.fromFile(imagePath),
+        'video': await MultipartFile.fromFile(videoPath),
+      });
+      await dio.post('tutor/register', data: formData);
+      return true;
+    } catch (e) {
+      inspect(e);
+      print("Error in become data");
+      return false;
+    }
   }
 
   @override
@@ -71,6 +123,8 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
+    print("image path: $imagePath");
+    print("video p  ath: ${videoController?.dataSource ?? ""}");
     List<Step> getSteps() => [
           Step(
             isActive: _currentStep >= 0,
@@ -520,6 +574,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
                             await picker.pickVideo(source: ImageSource.gallery);
                         if (video != null) {
                           setState(() {
+                            videoPath = video.path;
                             videoController =
                                 VideoPlayerController.file(File(video.path));
                             initializeVideoPlayerFuture =
@@ -595,7 +650,7 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
       type: StepperType.vertical,
       steps: getSteps(),
       currentStep: _currentStep,
-      onStepContinue: () {
+      onStepContinue: () async {
         bool isLastStep = _currentStep == getSteps().length - 1;
         if (isLastStep) {
           Navigator.of(context).pop();
@@ -612,9 +667,21 @@ class _BecomeTutorPageState extends State<BecomeTutorPage> {
           } else if (_currentStep == 1) {
             if (stepTwoForm.currentState!.validate() &&
                 videoController != null) {
-              setState(() {
-                _currentStep += 1;
-              });
+              bool result = await sendRequest(context);
+              if (result == true) {
+                setState(() {
+                  _currentStep += 1;
+                });
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      "Send request failed, try again later",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                );
+              }
             }
           }
         }

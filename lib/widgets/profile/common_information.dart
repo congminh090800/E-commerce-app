@@ -1,16 +1,24 @@
+import 'dart:developer';
+
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/real_models/user.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/submit_button.dart';
-import 'package:lettutor/widgets/tutors/tags_list.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CommonInformation extends StatefulWidget {
-  const CommonInformation({Key? key, required this.user}) : super(key: key);
+  const CommonInformation(
+      {Key? key, required this.user, required this.onUpdateInfo})
+      : super(key: key);
   final User user;
+  final Function onUpdateInfo;
   @override
   _CommonInformationState createState() => _CommonInformationState();
 }
@@ -25,6 +33,16 @@ class _CommonInformationState extends State<CommonInformation> {
   String? country;
   DateTime? birthday;
   List<String> specialties = [];
+  List<String> levels = [
+    "BEGINNER",
+    "HIGHER_BEGINNER",
+    "PRE_INTERMEDIATE",
+    "INTERMEDIATE",
+    "UPPER_INTERMEDIATE",
+    "ADVANCED",
+    "PROFICIENCY"
+  ];
+  String levelValue = "BEGINNER";
   @override
   void initState() {
     super.initState();
@@ -34,43 +52,53 @@ class _CommonInformationState extends State<CommonInformation> {
       emailController = TextEditingController(text: userData!.email);
       phoneController = TextEditingController(text: userData!.phone);
       country = userData!.country;
-      List<String> dayStr = userData!.birthday!.split("-");
-      if (dayStr.length == 3) {
-        int year = int.tryParse(dayStr[0]) ?? 2000;
-        int month = int.tryParse(dayStr[1]) ?? 1;
-        int day = int.tryParse(dayStr[2]) ?? 1;
-        birthday = DateTime(year, month, day);
+      if (userData!.birthday != null) {
+        List<String> dayStr = userData!.birthday!.split("-");
+        if (dayStr.length == 3) {
+          int year = int.tryParse(dayStr[0]) ?? 2000;
+          int month = int.tryParse(dayStr[1]) ?? 1;
+          int day = int.tryParse(dayStr[2]) ?? 1;
+          birthday = DateTime(year, month, day);
+        }
       }
     });
+  }
+
+  Future<void> updateCommonInfo(BuildContext context) async {
+    try {
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      // String fileName = imagePath.split('/').last;
+      var data = {
+        'name': nameController?.text ?? "default",
+        'phone': phoneController?.text ?? "000000000",
+        'country': country,
+        'level': levelValue,
+        'birthday': DateFormat('yyyy-MM-dd').format(birthday ?? DateTime.now()),
+      };
+      await dio.put('user/info', data: data);
+      widget.onUpdateInfo();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Update user data failed, try again later",
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      );
+      inspect(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     var i18n = AppLocalizations.of(context);
-    print(birthday);
-    var tagsList = [
-      i18n!.engForKidsType,
-      i18n.engForBusinessType,
-      i18n.conversationalType,
-      i18n.startersType,
-      i18n.moversType,
-      i18n.flytersType,
-      i18n.ketType,
-      i18n.petType,
-      i18n.ieltsType,
-      i18n.toeflType,
-      i18n.toeicType
-    ];
-    List<String> levels = [
-      i18n.levelBeginner,
-      i18n.levelHigherBeginner,
-      i18n.levelPreInter,
-      i18n.levelInter,
-      i18n.levelUpperInter,
-      i18n.levelAdvanced,
-      i18n.levelProficiency
-    ];
-    String levelValue = i18n.levelBeginner;
     return Form(
       key: commonInfoForm,
       child: Container(
@@ -91,7 +119,7 @@ class _CommonInformationState extends State<CommonInformation> {
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: BorderSide(width: 1),
                   ),
-                  hintText: i18n.nameLabelText,
+                  hintText: i18n!.nameLabelText,
                 ),
                 controller: nameController,
                 validator: (value) {
@@ -164,6 +192,7 @@ class _CommonInformationState extends State<CommonInformation> {
                   }
                   return null;
                 },
+                enabled: userData?.isPhoneActivated == true ? false : true,
               ),
             ),
             Container(
@@ -238,28 +267,6 @@ class _CommonInformationState extends State<CommonInformation> {
                 },
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                i18n.wantToLearnLabelText,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            Container(
-              child: TagsList(
-                tagsList: tagsList,
-                selectFirstItem: false,
-                onSelectedList: (list) {
-                  setState(() {
-                    specialties = list;
-                  });
-                  print(specialties);
-                },
-              ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -270,11 +277,7 @@ class _CommonInformationState extends State<CommonInformation> {
                     btnText: i18n.saveChangesBtnText,
                     onTap: () {
                       if (commonInfoForm.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Saved"),
-                          ),
-                        );
+                        updateCommonInfo(context);
                       }
                     },
                   ),

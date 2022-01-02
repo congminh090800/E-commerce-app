@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
+import 'package:provider/provider.dart';
 
 class ReportTutorDialog extends StatefulWidget {
-  const ReportTutorDialog({Key? key}) : super(key: key);
-
+  const ReportTutorDialog({Key? key, required this.tutorId}) : super(key: key);
+  final String tutorId;
   @override
   _ReportTutorDialogState createState() => _ReportTutorDialogState();
 }
@@ -13,6 +18,37 @@ class ReportTutorDialog extends StatefulWidget {
 class _ReportTutorDialogState extends State<ReportTutorDialog> {
   TextEditingController messageController = TextEditingController();
   bool isSubmitDisabled = true;
+
+  Future<void> sendReport(BuildContext context) async {
+    try {
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      var dio = Http().client;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      await dio.post(
+        "report",
+        data: {
+          "tutorId": widget.tutorId,
+          "content": messageController.text,
+        },
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      inspect(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Report failed, try again later",
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double cWidth = MediaQuery.of(context).size.width * 0.8;
@@ -84,11 +120,7 @@ class _ReportTutorDialogState extends State<ReportTutorDialog> {
                   btnText: i18n.submitBtnText,
                   isDisabled: isSubmitDisabled,
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("${messageController.text}"),
-                      ),
-                    );
+                    sendReport(context);
                   },
                 ),
               ],
