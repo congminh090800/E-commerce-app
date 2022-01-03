@@ -46,7 +46,7 @@ class Tutor {
   @JsonKey(name: "User")
   User? user;
   bool? isFavorite;
-  int? avgRating;
+  double? avgRating;
   Tutor();
   factory Tutor.fromJson(Map<String, dynamic> json) => _$TutorFromJson(json);
   Map<String, dynamic> toJson() => _$TutorToJson(this);

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/real_models/schedule.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 
 class LessonHistoryListTile extends StatefulWidget {
-  const LessonHistoryListTile({Key? key}) : super(key: key);
-
+  const LessonHistoryListTile({Key? key, required this.schedule})
+      : super(key: key);
+  final Schedule schedule;
   @override
   _LessonHistoryListTileState createState() => _LessonHistoryListTileState();
 }
@@ -36,7 +38,9 @@ class _LessonHistoryListTileState extends State<LessonHistoryListTile> {
             Container(
               margin: EdgeInsets.only(bottom: 10),
               child: Text(
-                i18n!.schedulePageLessonTime("03:30", "03:55"),
+                i18n!.schedulePageLessonTime(
+                    widget.schedule.scheduleDetailInfo?.startPeriod ?? "00: 00",
+                    widget.schedule.scheduleDetailInfo?.endPeriod ?? "00: 00"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -55,7 +59,10 @@ class _LessonHistoryListTileState extends State<LessonHistoryListTile> {
                     Container(
                       padding: EdgeInsets.all(15),
                       child: Text(
-                        i18n.historyPageNoRequest, // will show this if there is no notes
+                        widget.schedule.studentRequest == null
+                            ? i18n.historyPageNoRequest
+                            : (widget.schedule.studentRequest ??
+                                ""), // will show this if there is no notes
                         style: TextStyle(
                           color: Color(0xff8399a7),
                           fontSize: 15,
@@ -70,7 +77,10 @@ class _LessonHistoryListTileState extends State<LessonHistoryListTile> {
                     Container(
                       padding: EdgeInsets.all(15),
                       child: Text(
-                        i18n.historyPageNoReview, // will show this if there is no notes
+                        widget.schedule.tutorReview == null
+                            ? i18n.historyPageNoReview
+                            : (widget.schedule.tutorReview ??
+                                ""), // will show this if there is no notes
                         style: TextStyle(
                           color: Color(0xff8399a7),
                           fontSize: 15,

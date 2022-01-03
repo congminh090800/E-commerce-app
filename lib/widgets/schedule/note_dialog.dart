@@ -1,16 +1,44 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
+import 'package:provider/provider.dart';
 
 class NoteDialog extends StatefulWidget {
-  const NoteDialog({Key? key}) : super(key: key);
-
+  const NoteDialog({Key? key, required this.scheduleId}) : super(key: key);
+  final String scheduleId;
   @override
   _NoteDialogState createState() => _NoteDialogState();
 }
 
 class _NoteDialogState extends State<NoteDialog> {
   bool isSubmitDisabled = true;
+  TextEditingController content = TextEditingController();
+  Future<bool> updateNote(BuildContext context) async {
+    try {
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      await dio.post(
+        "booking/student-request/${widget.scheduleId}",
+        data: {
+          'studentRequest': content.text,
+        },
+      );
+      return true;
+    } catch (e) {
+      inspect(e);
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double cWidth = MediaQuery.of(context).size.width * 0.8;
@@ -59,6 +87,7 @@ class _NoteDialogState extends State<NoteDialog> {
                     }
                   });
                 },
+                controller: content,
               ),
             ),
             Container(
@@ -82,6 +111,21 @@ class _NoteDialogState extends State<NoteDialog> {
                     background: Colors.blue,
                     hasBorder: false,
                     primaryColor: Colors.white,
+                    onTap: () async {
+                      bool result = await updateNote(context);
+                      if (result == true) {
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Update note failed, try again later",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

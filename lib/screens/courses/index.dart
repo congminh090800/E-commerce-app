@@ -101,7 +101,6 @@ class _CoursesPageState extends State<CoursesPage> {
         'categoryId': selectedCategories,
         'q': qController.text
       };
-      print("query ${query.toString()}");
       var res = await dio.get("course", queryParameters: query);
       Iterable i = res.data["data"]["rows"];
       List<Course> data =

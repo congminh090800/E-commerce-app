@@ -1,13 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/schedule.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/schedule/note_dialog.dart';
+import 'package:provider/provider.dart';
 
 class LessonsListTile extends StatefulWidget {
-  const LessonsListTile({Key? key}) : super(key: key);
-
+  const LessonsListTile(
+      {Key? key, required this.schedule, required this.onUpdate})
+      : super(key: key);
+  final Schedule schedule;
+  final Function onUpdate;
   @override
   _LessonsListTileState createState() => _LessonsListTileState();
 }
@@ -21,7 +30,29 @@ class _LessonsListTileState extends State<LessonsListTile> {
             FullScreenDialog(title: title, content: content),
         fullscreenDialog: true,
       ),
-    );
+    ).then((value) {
+      widget.onUpdate();
+    });
+  }
+
+  Future<bool> cancelSchedule(BuildContext context) async {
+    try {
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      List<String> ids = [widget.schedule.scheduleDetailId!];
+      await dio.delete("booking", data: {
+        'scheduleDetailIds[]': ids,
+      });
+      return true;
+    } catch (e) {
+      inspect(e);
+      return false;
+    }
   }
 
   @override
@@ -37,27 +68,48 @@ class _LessonsListTileState extends State<LessonsListTile> {
           children: [
             Container(
               child: Text(
-                i18n!.schedulePageLessonTime("03:30", "03:55"),
+                i18n!.schedulePageLessonTime(
+                    widget.schedule.scheduleDetailInfo?.startPeriod ?? "00: 00",
+                    widget.schedule.scheduleDetailInfo?.endPeriod ?? "00: 00"),
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            Container(
-              width: 100,
-              height: 35,
-              margin: EdgeInsets.only(bottom: 10),
-              child: CustomizedButton(
-                borderRadius: 5,
-                btnText: i18n.cancelBtnText,
-                icon: Icons.disabled_by_default,
-                primaryColor: Colors.red,
-                horizontalPadding: 0,
-                verticalPadding: 0,
-                textSize: 17,
-              ),
-            ),
+            DateTime.now().millisecondsSinceEpoch + 7200000 >=
+                    (widget.schedule.scheduleDetailInfo?.startPeriodTimestamp ??
+                        0)
+                ? Container()
+                : Container(
+                    width: 100,
+                    height: 35,
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: CustomizedButton(
+                      borderRadius: 5,
+                      btnText: i18n.cancelBtnText,
+                      icon: Icons.disabled_by_default,
+                      primaryColor: Colors.red,
+                      horizontalPadding: 0,
+                      verticalPadding: 0,
+                      textSize: 17,
+                      onTap: () async {
+                        bool result = await cancelSchedule(context);
+                        if (result == true) {
+                          widget.onUpdate();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Delete schedule failed, try again later",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
             Table(
               border: TableBorder.all(
                 color: Color(0xfff0f0f0),
@@ -106,7 +158,9 @@ class _LessonsListTileState extends State<LessonsListTile> {
                                       displayDialog(
                                         context,
                                         i18n.noteDialogHeader,
-                                        NoteDialog(),
+                                        NoteDialog(
+                                          scheduleId: widget.schedule.id!,
+                                        ),
                                       ),
                                     },
                                   ),
@@ -124,7 +178,10 @@ class _LessonsListTileState extends State<LessonsListTile> {
                     Container(
                       padding: EdgeInsets.all(15),
                       child: Text(
-                        i18n.schedulePageEmptyRequest, // will show this if there is no notes
+                        widget.schedule.studentRequest == null
+                            ? i18n.schedulePageEmptyRequest
+                            : (widget.schedule.studentRequest ??
+                                ""), // will show this if there is no notes
                         style: TextStyle(
                           color: Color(0xff8399a7),
                           fontSize: 15,

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/provider/locale_provider.dart';
+import 'package:lettutor/real_models/schedule.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/schedule/lessons_list_tile.dart';
@@ -11,8 +12,11 @@ import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleListTile extends StatefulWidget {
-  const ScheduleListTile({Key? key}) : super(key: key);
-
+  const ScheduleListTile(
+      {Key? key, required this.schedule, required this.onUpdate})
+      : super(key: key);
+  final Schedule schedule;
+  final Function onUpdate;
   @override
   _ScheduleListTileState createState() => _ScheduleListTileState();
 }
@@ -52,7 +56,9 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                     'EE, dd MMM y',
                     provider.locale.toString(),
                   ).format(
-                    DateTime.now(),
+                    DateTime.fromMillisecondsSinceEpoch(widget.schedule
+                            .scheduleDetailInfo?.startPeriodTimestamp ??
+                        0),
                   ),
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -61,15 +67,15 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                   ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 20,
-                ),
-                child: Text(
-                  i18n!.schedulePageNumOfLesson(2.toString()),
-                  textAlign: TextAlign.left,
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.only(
+              //     bottom: 20,
+              //   ),
+              //   child: Text(
+              //     i18n!.schedulePageNumOfLesson(2.toString()),
+              //     textAlign: TextAlign.left,
+              //   ),
+              // ),
               Container(
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(bottom: 20),
@@ -91,7 +97,9 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                             child: CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(
-                                "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                                widget.schedule.scheduleDetailInfo?.scheduleInfo
+                                        ?.tutorInfo?.avatar ??
+                                    "",
                               ),
                               backgroundColor: Colors.transparent,
                             ),
@@ -109,7 +117,9 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                             Container(
                               padding: EdgeInsets.only(left: 6),
                               child: Text(
-                                "Keegan",
+                                widget.schedule.scheduleDetailInfo?.scheduleInfo
+                                        ?.tutorInfo?.name ??
+                                    "",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
@@ -120,7 +130,13 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                               children: [
                                 Container(
                                   child: CountryCodePicker(
-                                    initialSelection: 'VN',
+                                    initialSelection: widget
+                                            .schedule
+                                            .scheduleDetailInfo
+                                            ?.scheduleInfo
+                                            ?.tutorInfo
+                                            ?.country ??
+                                        "VN",
                                     showOnlyCountryWhenClosed: true,
                                     enabled: false,
                                     padding: EdgeInsets.all(0),
@@ -137,7 +153,7 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                                           color: Colors.blue,
                                         ),
                                         Text(
-                                          " " + i18n.schedulePageDirectMessage,
+                                          " " + i18n!.schedulePageDirectMessage,
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.blue,
@@ -168,8 +184,12 @@ class _ScheduleListTileState extends State<ScheduleListTile> {
                 shrinkWrap: true,
                 primary: false,
                 children: [
-                  LessonsListTile(),
-                  LessonsListTile(),
+                  LessonsListTile(
+                    schedule: widget.schedule,
+                    onUpdate: () {
+                      widget.onUpdate();
+                    },
+                  ),
                 ],
               ),
               Row(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/provider/locale_provider.dart';
+import 'package:lettutor/real_models/schedule.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 import 'package:lettutor/widgets/history/lesson_his_list_tile.dart';
 import 'package:lettutor/widgets/tutors/message_tutor_dialog.dart';
@@ -10,8 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HistoryListTile extends StatefulWidget {
-  const HistoryListTile({Key? key}) : super(key: key);
-
+  const HistoryListTile({Key? key, required this.schedule}) : super(key: key);
+  final Schedule schedule;
   @override
   _HistoryListTileState createState() => _HistoryListTileState();
 }
@@ -51,7 +52,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                     'EE, dd MMM y',
                     provider.locale.toString(),
                   ).format(
-                    DateTime.now(),
+                    DateTime.fromMillisecondsSinceEpoch(widget.schedule
+                            .scheduleDetailInfo?.startPeriodTimestamp ??
+                        0),
                   ),
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -90,7 +93,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                             child: CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(
-                                "https://api.app.lettutor.com/avatar/e9e3eeaa-a588-47c4-b4d1-ecfa190f63faavatar1632109929661.jpg",
+                                widget.schedule.scheduleDetailInfo?.scheduleInfo
+                                        ?.tutorInfo?.avatar ??
+                                    "",
                               ),
                               backgroundColor: Colors.transparent,
                             ),
@@ -119,7 +124,13 @@ class _HistoryListTileState extends State<HistoryListTile> {
                               children: [
                                 Container(
                                   child: CountryCodePicker(
-                                    initialSelection: 'VN',
+                                    initialSelection: widget
+                                            .schedule
+                                            .scheduleDetailInfo
+                                            ?.scheduleInfo
+                                            ?.tutorInfo
+                                            ?.country ??
+                                        "VN",
                                     showOnlyCountryWhenClosed: true,
                                     enabled: false,
                                     padding: EdgeInsets.all(0),
@@ -168,7 +179,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 shrinkWrap: true,
                 primary: false,
                 children: [
-                  LessonHistoryListTile(),
+                  LessonHistoryListTile(schedule: widget.schedule),
                 ],
               ),
             ],
