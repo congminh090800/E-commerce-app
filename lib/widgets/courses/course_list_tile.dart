@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/course_dto.dart';
+import 'package:lettutor/real_models/course.dart';
 import 'package:lettutor/screens/courses/course_details.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
 
@@ -7,7 +7,7 @@ class CourseListTile extends StatefulWidget {
   const CourseListTile({Key? key, this.readOnly = false, this.data})
       : super(key: key);
   final bool readOnly;
-  final CourseDTO? data;
+  final Course? data;
   @override
   _CourseListTileState createState() => _CourseListTileState();
 }

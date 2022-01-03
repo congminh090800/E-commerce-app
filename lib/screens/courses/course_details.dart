@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/course_dto.dart';
+import 'package:lettutor/real_models/course.dart';
 import 'package:lettutor/widgets/courses/course_list_tile.dart';
 
 class CourseDetails extends StatefulWidget {
   const CourseDetails({Key? key, required this.courseDetail}) : super(key: key);
-  final CourseDTO courseDetail;
+  final Course courseDetail;
   @override
   _CourseDetailsState createState() => _CourseDetailsState();
 }
