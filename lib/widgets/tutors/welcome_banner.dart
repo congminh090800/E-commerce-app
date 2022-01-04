@@ -37,7 +37,6 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
 
   Future<void> getLatestSchedule() async {
     try {
-      print("in request");
       setState(() {
         scheduleList.clear();
       });
@@ -56,7 +55,6 @@ class _WelcomeBannerState extends State<WelcomeBanner> {
         'sortBy': 'asc'
       };
       var res = await dio.get("booking/list/student", queryParameters: query);
-      inspect(res);
       Iterable i = res.data["data"]["rows"];
       List<Schedule> data =
           List<Schedule>.from(i.map((schedule) => Schedule.fromJson(schedule)));

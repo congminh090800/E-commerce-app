@@ -1,41 +1,33 @@
-import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:lettutor/models/schedule_dto.dart';
+import 'package:lettutor/constants/http.dart';
+import 'package:lettutor/provider/auth_provider.dart';
+import 'package:lettutor/real_models/tutor_schedule.dart';
 import 'package:lettutor/widgets/common/customized_button.dart';
 import 'package:lettutor/widgets/common/fullscreen_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'book_tutor_dialog.dart';
 
 class BookCalendarDialog extends StatefulWidget {
-  const BookCalendarDialog({Key? key}) : super(key: key);
-
+  const BookCalendarDialog({Key? key, required this.tutorId}) : super(key: key);
+  final tutorId;
   @override
   _BookCalendarDialogState createState() => _BookCalendarDialogState();
 }
 
 class _BookCalendarDialogState extends State<BookCalendarDialog> {
-  List<ScheduleDTO> schedules = [];
   _AppointmentDataSource? appointmentData;
-  Future<void> loadJsonData() async {
-    var jsonText =
-        await rootBundle.loadString("assets/schedule_calendar_dummy.json");
-    Iterable i = jsonDecode(jsonText);
-    List<ScheduleDTO>? result = List<ScheduleDTO>.from(
-        i.map((schedule) => ScheduleDTO.fromJson(schedule)));
-    setState(() {
-      schedules = result;
-    });
-    this.getCalendarTiles();
-  }
+  List<TutorSchedule> scheduleList = [];
+  bool loading = true;
 
   void getCalendarTiles() {
     List<Appointment> appointments = <Appointment>[];
-    for (var schedule in schedules) {
-      for (var detail in schedule.scheduleDetails!) {
+    for (var schedule in scheduleList) {
+      for (var detail in (schedule.scheduleDetails!)) {
         appointments.add(Appointment(
           startTime:
               DateTime.fromMillisecondsSinceEpoch(detail.startPeriodTimestamp!)
@@ -45,7 +37,13 @@ class _BookCalendarDialogState extends State<BookCalendarDialog> {
                   .toLocal(),
           startTimeZone: '',
           endTimeZone: '',
-          subject: detail.isBooked! ? 'Reserved' : 'Book',
+          subject: ((detail.isBooked ?? false) ||
+                      (detail.bookingInfo!.length > 0 &&
+                          detail.bookingInfo!.first.isDeleted == false)) ||
+                  DateTime.now().millisecondsSinceEpoch >=
+                      (detail.startPeriodTimestamp ?? 0)
+              ? 'Booked'
+              : 'Book',
           id: detail.id,
         ));
       }
@@ -55,10 +53,60 @@ class _BookCalendarDialogState extends State<BookCalendarDialog> {
     });
   }
 
+  displayDialog(BuildContext context, String title, Widget content) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) =>
+            FullScreenDialog(title: title, content: content),
+        fullscreenDialog: true,
+      ),
+    ).then((value) async {
+      await getTutorSchedule();
+      getCalendarTiles();
+    });
+  }
+
+  Future<void> getTutorSchedule() async {
+    try {
+      setState(() {
+        loading = true;
+      });
+      var dio = Http().client;
+      var accessToken = Provider.of<AuthProvider>(context, listen: false)
+          .auth
+          .tokens!
+          .access!
+          .token;
+      dio.options.headers["Authorization"] = "Bearer $accessToken";
+      var res = await dio.post("schedule", data: {
+        'tutorId': widget.tutorId,
+      });
+      Iterable i = res.data["data"];
+      List<TutorSchedule> result = List<TutorSchedule>.from(
+        i.map(
+          (schedule) => TutorSchedule.fromJson(schedule),
+        ),
+      );
+      setState(() {
+        scheduleList = result;
+      });
+      this.getCalendarTiles();
+      setState(() {
+        loading = false;
+      });
+      inspect(scheduleList);
+    } catch (e) {
+      inspect(e);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    this.loadJsonData();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      await this.getTutorSchedule();
+    });
   }
 
   @override
@@ -67,138 +115,70 @@ class _BookCalendarDialogState extends State<BookCalendarDialog> {
     return SafeArea(
       top: false,
       child: Container(
-        child: SfCalendar(
-          cellBorderColor: Colors.black,
-          view: CalendarView.day,
-          showDatePickerButton: true,
-          showCurrentTimeIndicator: false,
-          dataSource: this.appointmentData,
-          allowAppointmentResize: true,
-          appointmentBuilder: (context, calendarAppointmentDetails) {
-            var appointment = calendarAppointmentDetails.appointments.first;
-            return Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: CustomizedButton(
-                      btnText: appointment.subject,
-                      background: Colors.blue,
-                      primaryColor: Colors.white,
-                      onTap: () {
-                        print(appointment.toString());
-                        displayDialog(
-                          context,
-                          i18n!.bookTutorBtnText,
-                          BookTutorDialog(data: appointment),
-                        );
-                      },
-                      isDisabled: appointment.subject == 'Reserved',
+        child: loading == true
+            ? Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+                margin: EdgeInsets.only(top: 20),
+              )
+            : SfCalendar(
+                cellBorderColor: Colors.black,
+                view: CalendarView.day,
+                showDatePickerButton: true,
+                showCurrentTimeIndicator: false,
+                dataSource: this.appointmentData,
+                allowAppointmentResize: true,
+                appointmentBuilder: (context, calendarAppointmentDetails) {
+                  var appointment =
+                      calendarAppointmentDetails.appointments.first;
+                  return Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: CustomizedButton(
+                            btnText: appointment.subject,
+                            background: Colors.blue,
+                            primaryColor: Colors.white,
+                            onTap: () {
+                              displayDialog(
+                                context,
+                                i18n!.bookTutorBtnText,
+                                BookTutorDialog(
+                                  data: appointment,
+                                ),
+                              );
+                            },
+                            isDisabled: appointment.subject == 'Booked',
+                          ),
+                        ),
+                      ],
                     ),
+                  );
+                },
+                timeSlotViewSettings: TimeSlotViewSettings(
+                  startHour: 0,
+                  endHour: 23,
+                  timeIntervalHeight: 100,
+                  timeRulerSize: 100,
+                  timeTextStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                ],
+                  timeInterval: Duration(
+                    minutes: 25,
+                  ),
+                  timeFormat: "HH:mm",
+                ),
               ),
-            );
-          },
-          timeSlotViewSettings: TimeSlotViewSettings(
-            startHour: 8,
-            endHour: 23,
-            timeIntervalHeight: 100,
-            timeRulerSize: 100,
-            timeTextStyle: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            timeInterval: Duration(
-              minutes: 25,
-            ),
-            timeFormat: "hh:mm",
-          ),
-        ),
       ),
     );
   }
-}
-
-_AppointmentDataSource _getCalendarDataSource() {
-  List<Appointment> appointments = <Appointment>[];
-  DateTime rigtNow = DateTime.now();
-  appointments.add(Appointment(
-    startTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 0, 0, 0, 0)
-        .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 25, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 26, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 50, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 8, 51, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 15, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Reserved',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 16, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 40, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 9, 41, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 5, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  appointments.add(Appointment(
-    startTime:
-        DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 6, 0, 0, 0)
-            .toLocal(),
-    endTime: DateTime(rigtNow.year, rigtNow.month, rigtNow.day, 10, 30, 0, 0, 0)
-        .toLocal(),
-    startTimeZone: '',
-    endTimeZone: '',
-    subject: 'Book',
-  ));
-  return _AppointmentDataSource(appointments);
 }
 
 class _AppointmentDataSource extends CalendarDataSource {
   _AppointmentDataSource(List<Appointment> source) {
     appointments = source;
   }
-}
-
-displayDialog(BuildContext context, String title, Widget content) {
-  Navigator.push(
-    context,
-    MaterialPageRoute<void>(
-      builder: (BuildContext context) =>
-          FullScreenDialog(title: title, content: content),
-      fullscreenDialog: true,
-    ),
-  );
 }

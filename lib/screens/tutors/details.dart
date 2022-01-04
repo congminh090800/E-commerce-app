@@ -37,7 +37,9 @@ class _TutorDetailsState extends State<TutorDetails> {
             FullScreenDialog(title: title, content: content),
         fullscreenDialog: true,
       ),
-    );
+    ).then((value) {
+      getDetail();
+    });
   }
 
   bool _isFavorited = false;
@@ -323,8 +325,15 @@ class _TutorDetailsState extends State<TutorDetails> {
                             background: Colors.blue,
                             primaryColor: Colors.white,
                             onTap: () => {
-                              displayDialog(context, i18n.bookTutorBtnText,
-                                  BookCalendarDialog())
+                              displayDialog(
+                                context,
+                                i18n.bookTutorBtnText,
+                                BookCalendarDialog(
+                                  tutorId: tutor.user == null
+                                      ? tutor.userId
+                                      : tutor.user!.id,
+                                ),
+                              ),
                             },
                           ),
                         ),

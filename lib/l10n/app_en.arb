@@ -96,7 +96,7 @@
   "reportTutorDialogPlaceholder": "Please let us know details about your problem",
   "bookDialogBookingTimeHeader": "Booking Time",
   "bookDialogBalanceHeader": "Balance",
-  "bookDialogBalanceContent": "You have {numOfLesson} lesson(s) less",
+  "bookDialogBalanceContent": "You have {numOfLesson} lesson(s)",
   "@bookDialogBalanceContent": {
     "placeholders": {
       "numOfLesson": {

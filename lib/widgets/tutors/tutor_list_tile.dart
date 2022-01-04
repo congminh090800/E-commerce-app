@@ -71,7 +71,6 @@ class _TutorListTileState extends State<TutorListTile> {
               : widget.tutor.user!.id
         },
       );
-      inspect(res);
       setState(() {
         isFavorited = !isFavorited;
       });
@@ -88,7 +87,6 @@ class _TutorListTileState extends State<TutorListTile> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(widget.tutor);
     return InkWell(
       onTap: () => {
         displayDialog(

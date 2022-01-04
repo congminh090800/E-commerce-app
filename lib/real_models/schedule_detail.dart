@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:lettutor/real_models/schedule.dart';
 import 'package:lettutor/real_models/schedule_info.dart';
 
 part 'schedule_detail.g.dart';
@@ -12,7 +13,11 @@ class ScheduleDetail {
   int? endPeriodTimestamp;
   String? startPeriod;
   String? endPeriod;
+  String? scheduleId;
   ScheduleInfo? scheduleInfo;
+  bool? isBooked;
+  @JsonKey(nullable: true)
+  List<Schedule>? bookingInfo;
   ScheduleDetail();
   factory ScheduleDetail.fromJson(Map<String, dynamic> json) =>
       _$ScheduleDetailFromJson(json);
