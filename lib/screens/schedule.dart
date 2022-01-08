@@ -22,7 +22,7 @@ class SchedulePage extends StatefulWidget {
 class _SchedulePageState extends State<SchedulePage> {
   bool loading = true;
   int page = 1;
-  int perPage = 5;
+  int perPage = 2;
   int count = 0;
   List<Schedule> scheduleList = [];
   Future<void> getSchedules(bool resetList) async {

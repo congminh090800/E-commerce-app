@@ -20,7 +20,7 @@ class SearchTutorPage extends StatefulWidget {
 class _SearchTutorPageState extends State<SearchTutorPage> {
   List<Tutor> tutors = [];
   int count = 0;
-  int perPage = 5;
+  int perPage = 2;
   int page = 1;
   bool loading = false;
   @override

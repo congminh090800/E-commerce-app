@@ -20,7 +20,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   bool loading = true;
   int page = 1;
-  int perPage = 5;
+  int perPage = 2;
   int count = 0;
   List<Schedule> scheduleList = [];
   Future<void> getSchedules(bool resetList) async {

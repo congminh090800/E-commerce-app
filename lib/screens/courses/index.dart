@@ -22,7 +22,7 @@ class CoursesPage extends StatefulWidget {
 class _CoursesPageState extends State<CoursesPage> {
   var i18n;
   int page = 1;
-  int size = 5;
+  int size = 2;
   int count = 0;
   List<String> levelsTag = [];
   var sortValue;
